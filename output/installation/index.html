@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Installation - Baremaps</title>
+    
+    <link rel="stylesheet" href="/assets/css/main.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+          <div class="four columns">
+            <header>
+              <h2 class="logo"><a href="/"><i class="far fa-map"></i> Baremaps</a></h2>
+              <p>Create custom vector tiles from OpenStreetMap and other data sources with Postgis and Java.</p>
+              <p>
+                <a class="github-button" href="https://github.com/baremaps/baremaps" data-size="large" data-show-count="true"
+                   aria-label="Star baremaps/baremaps on GitHub">Star</a>
+                <a class="github-button" href="https://github.com/baremaps/baremaps/releases/latest"
+                   data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large"
+                   aria-label="Download baremaps/baremaps on GitHub">Download</a>
+              </p>
+            </header>
+            <nav>
+              <ul>
+                
+                <li>
+                  <a href="/about/"><i class="fas fa-bullseye"></i> About</a>
+                  
+                </li>
+                
+                <li>
+                  <a href="/installation/"><i class="fas fa-download"></i> Installation</a>
+                  
+                </li>
+                
+                <li>
+                  <a href="/examples/"><i class="fas fa-vial"></i> Examples</a>
+                  
+                  <ul>
+                    
+                    <li><a href="/examples/openstreetmap/">OpenStreetMap</a></li>
+                    
+                    <li><a href="/examples/naturalearth/">NaturalEarth</a></li>
+                    
+                    <li><a href="/examples/contour/">Contour</a></li>
+                    
+                  </ul>
+                  
+                </li>
+                
+                <li>
+                  <a href="/stylesheet/"><i class="fas fa-paint-roller"></i> Stylesheet</a>
+                  
+                </li>
+                
+                <li>
+                  <a href="/assets/demo.html"><i class="fas fa-map"></i> Demo</a>
+                  
+                </li>
+                
+              </ul>
+            </nav>
+          </div>
+          <article class="eight columns">
+            <h1 id="installation">Installation</h1>
+
+<p>In order to run Baremaps, you first need to install Java 8 or a later version. 
+<a href="https://sdkman.io/">SDKMAN</a> provides a convenient Command Line Interface (CLI) to install and upgrade Java.</p>
+
+<p>To install baremaps, download and unzip the latest <a href="https://github.com/baremaps/baremaps/releases/latest">release</a>. 
+Then, add the <code class="language-plaintext highlighter-rouge">/bin</code> folder to your <code class="language-plaintext highlighter-rouge">PATH</code> variable:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://github.com/baremaps/baremaps/releases/latest/download/baremaps.zip
+unzip baremaps.zip
+export PATH=$PATH:`pwd`/baremaps/bin
+</code></pre></div></div>
+
+<p>Calling the <code class="language-plaintext highlighter-rouge">baremaps</code> command should now result in an output similar to the following:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Usage: baremaps [COMMAND]
+A toolkit for producing vector tiles.
+Commands:
+  import  Import OpenStreetMap data in the Postgresql database.
+  update  Update OpenStreetMap data in the Postgresql database.
+  export  Export vector tiles from the Postgresql database.
+  serve   Serve vector tiles from the the Postgresql database.
+</code></pre></div></div>
+
+<p>In order to run Baremaps, you need to setup a <a href="https://postgis.net/">postgis</a> database.
+The following docker image will allow you to jump start this installation:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run \
+  --name baremaps \
+  --publish 5432:5432 \
+  -e POSTGRES_DB=baremaps \
+  -e POSTGRES_USER=baremaps \
+  -e POSTGRES_PASSWORD=baremaps \
+  -d postgis/postgis:latest
+</code></pre></div></div>
+
+<p>You can then stop and start the container with the following commands:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker stop baremaps
+docker start baremaps
+</code></pre></div></div>
+
+<p>From there, the <a href="/examples/openstreetmap/">OpenStreetMap</a> example is a good introduction to Baremaps, it shows how to produce high resolution vector tiles.</p>
+
+            <p><a class="edit" href="https://github.com/baremaps/baremaps/edit/main/docs/installation.md"><i class="fas fa-edit"></i> Improve this page</a></p>
+          </article>
+      </div>
+    </div>
+    <script async defer src="https://kit.fontawesome.com/14dcd5fdfb.js" crossorigin="anonymous"></script>
+    <script async defer src="https://buttons.github.io/buttons.js" crossorigin="anonymous"></script>
+  </body>
+</html>
