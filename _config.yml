@@ -1,0 +1,7 @@
+title: Baremaps
+repository: baremaps/baremaps
+plugins:
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-github-metadata
+  - jekyll-optional-front-matter

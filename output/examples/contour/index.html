@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contour Lines in Vector Tiles - Baremaps</title>
+    
+    <link rel="stylesheet" href="/assets/css/main.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+          <div class="four columns">
+            <header>
+              <h2 class="logo"><a href="/"><i class="far fa-map"></i> Baremaps</a></h2>
+              <p>Create custom vector tiles from OpenStreetMap and other data sources with Postgis and Java.</p>
+              <p>
+                <a class="github-button" href="https://github.com/baremaps/baremaps" data-size="large" data-show-count="true"
+                   aria-label="Star baremaps/baremaps on GitHub">Star</a>
+                <a class="github-button" href="https://github.com/baremaps/baremaps/releases/latest"
+                   data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large"
+                   aria-label="Download baremaps/baremaps on GitHub">Download</a>
+              </p>
+            </header>
+            <nav>
+              <ul>
+                
+                <li>
+                  <a href="/about/"><i class="fas fa-bullseye"></i> About</a>
+                  
+                </li>
+                
+                <li>
+                  <a href="/installation/"><i class="fas fa-download"></i> Installation</a>
+                  
+                </li>
+                
+                <li>
+                  <a href="/examples/"><i class="fas fa-vial"></i> Examples</a>
+                  
+                  <ul>
+                    
+                    <li><a href="/examples/openstreetmap/">OpenStreetMap</a></li>
+                    
+                    <li><a href="/examples/naturalearth/">NaturalEarth</a></li>
+                    
+                    <li><a href="/examples/contour/">Contour</a></li>
+                    
+                  </ul>
+                  
+                </li>
+                
+                <li>
+                  <a href="/stylesheet/"><i class="fas fa-paint-roller"></i> Stylesheet</a>
+                  
+                </li>
+                
+                <li>
+                  <a href="/assets/demo.html"><i class="fas fa-map"></i> Demo</a>
+                  
+                </li>
+                
+              </ul>
+            </nav>
+          </div>
+          <article class="eight columns">
+            <h1 id="contour-lines-in-vector-tiles">Contour Lines in Vector Tiles</h1>
+
+<p>This example demonstrates how to produce contours from a digital elevation model (DEM) and how to display them with vector tiles.</p>
+
+<p>The approach consists in using the <a href="https://gdal.org/programs/gdal_contour.html"><code class="language-plaintext highlighter-rouge">gdal_contour</code></a> command.
+Therefore, start by installing <code class="language-plaintext highlighter-rouge">gdal</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get <span class="nb">install </span>gdal-bin
+</code></pre></div></div>
+
+<p>The geotiff present in this directory comes from the <a href="https://asterweb.jpl.nasa.gov/gdem.asp">ASTER</a> dataset.
+We used the following command to reproject the geotiff in the desired projection (e.g. WebMercator) before importing it in the database.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gdalwarp -rc \
+  -s_srs epsg:4326 -t_srs epsg:3857 \
+  -dstnodata 0 -of GTiff -co tiled=yes \
+  liecthenstein-aster-dem-v2.tif \
+  liecthenstein-aster-dem-v2-3857.tif
+</code></pre></div></div>
+
+<p>You can now import any GeoTiff DEM as contours in postgis. 
+In the following command, the <code class="language-plaintext highlighter-rouge">-nln</code> argument name the table that contains the data, 
+the <code class="language-plaintext highlighter-rouge">-a</code> argument name the column that contains the elevation, 
+the <code class="language-plaintext highlighter-rouge">-i</code> argument specifies the interval in meters at which contours are generated.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gdal_contour \
+  -a elevation -nln aster_dem -i 10 \
+  -f PostgreSQL \
+  liecthenstein-aster-dem-v2-3857.tif "PG:host=localhost user=baremaps password=baremaps dbname=baremaps"
+</code></pre></div></div>
+
+<p>Some index can now be added to the database to improve performances. 
+When available, a smoothing function such as <code class="language-plaintext highlighter-rouge">ST_ChaikinSmoothing</code> can be used to improve rendering of the contours.</p>
+
+<pre><code class="language-postgresql">DROP INDEX IF EXISTS aster_dem_gix;
+CREATE INDEX CONCURRENTLY IF NOT EXISTS aster_dem_gix ON aster_dem USING SPGIST(wkb_geometry);
+</code></pre>
+
+<p>Finally, to preview the map in the browser, run the tile server with the following command. 
+Your changes to the configuration files will be automatically reloaded by the browser.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>baremaps map dev <span class="se">\</span>
+  <span class="nt">--database</span> <span class="s1">'jdbc:postgresql://localhost:5432/baremaps?user=baremaps&amp;password=baremaps'</span> <span class="se">\</span>
+  <span class="nt">--tileset</span> <span class="s1">'tileset.json'</span> <span class="se">\</span>
+  <span class="nt">--style</span> <span class="s1">'style.json'</span>
+</code></pre></div></div>
+
+            <p><a class="edit" href="https://github.com/baremaps/baremaps/edit/main/docs/examples/contour/index.md"><i class="fas fa-edit"></i> Improve this page</a></p>
+          </article>
+      </div>
+    </div>
+    <script async defer src="https://kit.fontawesome.com/14dcd5fdfb.js" crossorigin="anonymous"></script>
+    <script async defer src="https://buttons.github.io/buttons.js" crossorigin="anonymous"></script>
+  </body>
+</html>

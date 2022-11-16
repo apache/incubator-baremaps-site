@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Extrusion Example - Baremaps</title>
+    
+    <link rel="stylesheet" href="/assets/css/main.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+          <div class="four columns">
+            <header>
+              <h2 class="logo"><a href="/"><i class="far fa-map"></i> Baremaps</a></h2>
+              <p>Create custom vector tiles from OpenStreetMap and other data sources with Postgis and Java.</p>
+              <p>
+                <a class="github-button" href="https://github.com/baremaps/baremaps" data-size="large" data-show-count="true"
+                   aria-label="Star baremaps/baremaps on GitHub">Star</a>
+                <a class="github-button" href="https://github.com/baremaps/baremaps/releases/latest"
+                   data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large"
+                   aria-label="Download baremaps/baremaps on GitHub">Download</a>
+              </p>
+            </header>
+            <nav>
+              <ul>
+                
+                <li>
+                  <a href="/about/"><i class="fas fa-bullseye"></i> About</a>
+                  
+                </li>
+                
+                <li>
+                  <a href="/installation/"><i class="fas fa-download"></i> Installation</a>
+                  
+                </li>
+                
+                <li>
+                  <a href="/examples/"><i class="fas fa-vial"></i> Examples</a>
+                  
+                  <ul>
+                    
+                    <li><a href="/examples/openstreetmap/">OpenStreetMap</a></li>
+                    
+                    <li><a href="/examples/naturalearth/">NaturalEarth</a></li>
+                    
+                    <li><a href="/examples/contour/">Contour</a></li>
+                    
+                  </ul>
+                  
+                </li>
+                
+                <li>
+                  <a href="/stylesheet/"><i class="fas fa-paint-roller"></i> Stylesheet</a>
+                  
+                </li>
+                
+                <li>
+                  <a href="/assets/demo.html"><i class="fas fa-map"></i> Demo</a>
+                  
+                </li>
+                
+              </ul>
+            </nav>
+          </div>
+          <article class="eight columns">
+            <h1 id="extrusion-example">Extrusion Example</h1>
+
+<p>This example builds upon the <a href="https://www.baremaps.com/examples/openstreetmap/">OpenStreetMap example</a> and shows how 3d
+buildings can be extruded with Maplibre. First, start by downloading the OSM data for London in the current directory.</p>
+
+<p>To import London data in the database.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>baremaps workflow execute --file workflow.json
+</code></pre></div></div>
+
+<p>In the <a href="https://raw.githubusercontent.com/baremaps/baremaps/main/docs/examples/extrusion/tileset.json">tileset.json</a>
+file, notice the SQL query associated with the building layer. Here, the number of levels stored in OSM is multiplied by
+3, which rawly corresponds to the height of a level in meters.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span>
+       <span class="n">tags</span> <span class="o">||</span> <span class="n">jsonb_build_object</span><span class="p">(</span><span class="s1">'building:height'</span><span class="p">,</span> <span class="p">(</span><span class="k">CASE</span>
+                                                          <span class="k">WHEN</span> <span class="n">tags</span> <span class="o">-&gt;&gt;</span> <span class="s1">'building:levels'</span> <span class="o">~</span> <span class="s1">'^[0-9</span><span class="se">\\</span><span class="s1">.]+$'</span>
+                                                              <span class="k">THEN</span> <span class="n">tags</span> <span class="o">-&gt;&gt;</span> <span class="s1">'building:levels'</span>
+                                                          <span class="k">ELSE</span> <span class="s1">'1'</span> <span class="k">END</span><span class="p">)::</span><span class="nb">real</span> <span class="o">*</span> <span class="mi">3</span><span class="p">),</span>
+       <span class="n">geom</span>
+<span class="k">FROM</span> <span class="n">osm_ways</span>
+<span class="k">WHERE</span> <span class="n">tags</span> <span class="o">?</span> <span class="s1">'building'</span>
+</code></pre></div></div>
+
+<p>This property is then used in
+the <a href="https://raw.githubusercontent.com/baremaps/baremaps/main/docs/examples/extrusion/style.json">style.json</a> file to
+extrude the buildings.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="err">...</span><span class="w">
+  </span><span class="nl">"layers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"building"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fill-extrusion"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"baremaps"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"source-layer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"building"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"paint"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"fill-extrusion-color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rgb(152, 174, 221)"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"fill-extrusion-height"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="s2">"get"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"building:height"</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="nl">"fill-extrusion-base"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"fill-extrusion-opacity"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="err">...</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>To preview this example, start the tile viewer. Here, the cache directive is
+a <a href="https://www.javadoc.io/doc/com.github.ben-manes.caffeine/caffeine/2.2.2/com/github/benmanes/caffeine/cache/CaffeineSpec.html">caffeine specification</a>
+for a 100MB tile cache.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>baremaps map dev <span class="se">\</span>
+  <span class="nt">--database</span> <span class="s1">'jdbc:postgresql://localhost:5432/baremaps?user=baremaps&amp;password=baremaps'</span> <span class="se">\</span>
+  <span class="nt">--tileset</span> <span class="s1">'tileset.json'</span> <span class="se">\</span>
+  <span class="nt">--style</span> <span class="s1">'style.json'</span>
+</code></pre></div></div>
+
+<p>Well done, a map of London with extruded buildings should now appear in your <a href="http://localhost:9000/">browser</a>!</p>
+
+<p><img src="screenshot.png" alt="Tile viewer" /></p>
+
+
+            <p><a class="edit" href="https://github.com/baremaps/baremaps/edit/main/docs/examples/extrusion/index.md"><i class="fas fa-edit"></i> Improve this page</a></p>
+          </article>
+      </div>
+    </div>
+    <script async defer src="https://kit.fontawesome.com/14dcd5fdfb.js" crossorigin="anonymous"></script>
+    <script async defer src="https://buttons.github.io/buttons.js" crossorigin="anonymous"></script>
+  </body>
+</html>
