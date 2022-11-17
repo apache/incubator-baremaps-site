@@ -1,4 +1,4 @@
-title: Baremaps
+title: Apache Baremaps
 repository: apache/incubator-baremaps-site
 plugins:
   - jekyll-sitemap
