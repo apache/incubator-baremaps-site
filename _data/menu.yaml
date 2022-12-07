@@ -28,6 +28,8 @@ items:
     subitems:
       - page: Project structure
         url: /developer-manual/project-structure/
+      - page: How to build with Maven
+        url: /developer-manual/how-to-build-with-maven/
       - page: Set up in IntelliJ IDEA
         url: /developer-manual/setup-in-intellij/
       - page: Geocoder
