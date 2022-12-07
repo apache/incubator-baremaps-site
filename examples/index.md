@@ -6,10 +6,29 @@ permalink: /examples/
 
 # Examples
 
-Several examples illustrate how to import datasets in postgis in order to produce vector tiles:
-- The [OpenStreetMap](/examples/openstreetmap/) example is a good introduction to Baremaps, it shows how to produce high resolution vector tiles.
-- The [Extrusion](/examples/openstreetmap/) builds upon the OpenStreetMap example and shows how to extrude buildings.
-- The [NaturalEarth](/examples/naturalearth/) example shows how to produce low resolution vector tiles.
-- The [Contour](/examples/contour/) example shows how to produce contour lines from a digital elevation model.
+The examples will showcase the different uses of the Apache Baremaps toolkits. To run the examples you need to clone or [download](https://github.com/apache/incubator-baremaps/archive/refs/heads/main.zip) the main
+repository in order to have access to the [files](https://github.com/apache/incubator-baremaps/blob/main/examples/) that have been prepared for the examples.
 
-The [OpenStreetMap Vecto](/stylesheet/) repository shows how to build a more advanced configuration and stylesheet for Baremaps.
+```bash
+git clone git@github.com:apache/incubator-baremaps.git
+```
+
+You should have completed the [Installation Guide](/getting-started/installing-the-cli) before running the examples.
+
+For the creation of custom vector tiles you can follow these guides:
+
+- The [OpenStreetMap](/examples/import-osm-into-postgis/) example is a good introduction to Baremaps, it shows how to produce high resolution vector tiles.
+- The [NaturalEarth](/examples/import-naturalearth-into-postgis/) example shows how to produce low resolution vector tiles.
+- The [Contour](/examples/import-contour-into-postgis/) example shows how to produce contour lines from a digital elevation model.
+
+For the creation of an IP to location service follow this guide:
+
+- The [IP to location](/examples/ip-to-location/) example shows how to create and serve an IP to location service in a simple web application.
+
+If you want to work on Geocoding there is this example:
+
+- The [Geocoding](/examples/geocoding/) example shows how to create and serve a geocoding service in a simple web application.
+
+Developers who want to execute the code, should refer to the developer manual:
+
+- The [Developer Manual](/developer-manual/) aims at helping developers to execute the code, understand the structure and contribute to the project.

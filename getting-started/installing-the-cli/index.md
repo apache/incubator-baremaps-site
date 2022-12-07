@@ -1,0 +1,35 @@
+---
+layout: default
+title: Installing the CLI
+permalink: /getting-started/installing-the-cli/
+---
+
+#  Installing the CLI
+
+In order to run Apache Baremaps, you first need to install Java 17 or a later version.
+[SDKMAN](https://sdkman.io/) provides a convenient Command Line Interface (CLI) to install and upgrade Java.
+
+To install Apache Baremaps, download and unzip the latest [release](https://github.com/apache/incubator-baremaps/releases/latest).
+Then, add the `/bin` folder to your `PATH` variable:
+
+```
+wget https://github.com/apache/incubator-baremaps/releases/latest/download/baremaps.zip
+unzip baremaps.zip
+export PATH=$PATH:`pwd`/baremaps/bin
+```
+
+Calling the `baremaps` command should now result in an output similar to the following:
+
+```
+Usage: baremaps [COMMAND]
+A toolkit for producing vector tiles.
+Commands:
+  import  Import OpenStreetMap data in the Postgresql database.
+  update  Update OpenStreetMap data in the Postgresql database.
+  export  Export vector tiles from the Postgresql database.
+  serve   Serve vector tiles from the the Postgresql database.
+```
+
+From there, head into [Installing PostGIS](/getting-started/installing-postgis/) if you plan to work with vector tiles.
+
+If you want to work on [Geocoding](/examples/geocoding/) or [IP to location](/examples/ip-to-location/), head directly into the related examples.

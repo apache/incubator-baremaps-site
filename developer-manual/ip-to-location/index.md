@@ -1,0 +1,107 @@
+---
+layout: default
+title: IP to location
+permalink: /developer-manual/ip-to-location/
+---
+
+# IP to location
+
+Using data publicly available from the 5 [Regional Internet Registries (RIRs)](https://whatismyipaddress.com/rir) 
+we are able to generate a stream of objects detailing Internet resource allocations. We call these NIC Objects 
+(Network Information Centre Objects).
+
+Here is the list of the 5 RIRs.
+
+ - [ARIN](https://www.arin.net/)
+ - [LACNIC](https://www.lacnic.net/)
+ - [AFRINIC](https://afrinic.net/)
+ - [RIPE NCC](https://www.ripe.net/)
+ - [APNIC](https://www.apnic.net/)
+
+Using the list of NIC objects, we extract those that concern IPv4 address ranges ([INETNUM](https://www.ripe.net/manage-ips-and-asns/db/support/documentation/ripe-database-documentation/rpsl-object-types/4-2-descriptions-of-primary-objects/4-2-4-description-of-the-inetnum-object))
+, then using the Baremaps Geocoder API, we iterate through the extracted NIC objects to geo-locate each one of them. 
+
+The resulting geo-localised IPv4 address ranges are stored in a SQLite database which can be easily queried to geo-locate a specific IP.
+
+A NIC object contains a list of attributes but these attributes are not consistent between each NIC object. 
+We try to use these 4 attributes to query the Geocoder service : 
+
+- *address* contains the address of the NIC Object
+- *descr* sometimes contains the address of the NIC Object
+- *country* contains the country code in ISO format (ISO 3166) - [RIPE list of country codes](https://www.ripe.net/participate/member-support/list-of-members/list-of-country-codes-and-rirs)
+- *geoloc* contains the latitude and longitude which can be used directly
+
+Some NIC Objects contain a reference to an organisation, and the organisation's NIC Object itself contains the 
+geo-localisation information. However, we don't make use of that for now.
+
+The [structure of the RIPE database](https://www.ripe.net/manage-ips-and-asns/db/support/documentation/ripe-database-documentation/ripe-database-structure)
+should be applicable to all the RIRs.
+
+## Generating the IP to location database
+
+A workflow is a directed acyclic graph of steps executed by Baremaps. To download and import the sample OSM data in Postgres, execute the following [workflow](https://raw.githubusercontent.com/apache/incubator-baremaps/main/examples/ip-to-location/workflow.js).
+
+```
+baremaps workflow execute --file examples/ip-to-location/workflow.js
+```
+
+Depending on the size of the OpenStreetMap file, the execution of this command may take some time.
+Eventually, the output produced by the command should look as follows.
+
+```
+[INFO ] 2022-07-26 09:47:40.906 [main] Workflow - Executing workflow workflow.js
+...
+[INFO ] 2022-07-26 09:48:21.368 [main] Workflow - Finished executing workflow workflow.js
+```
+
+```
+iploc serve --database iploc.db --port 3000
+```
+
+## Code usage
+
+In order to generate the SQLite database that contains the geo-localised IP address ranges you must follow a few steps.
+
+1) First you need to load/build a Geocoder which will be used to query the addresses contained in the NIC objects.
+
+```java
+Geocoder geocoder = new GeonamesGeocoder(indexPath, dataUri);
+geocoder.build();
+```
+
+2) Then you need to generate a Stream of NIC Objects. You can use the Nic Fetcher to automatically download all of the NIC Objects from the 5 RIRs.
+
+```java
+Stream<Path> nicPathsStream = new NicFetcher().fetch();
+Stream<NicObject> nicObjectStream =
+    nicPathsStream.flatMap(nicPath -> {
+        try {
+            return NicParser.parse(new BufferedInputStream(Files.newInputStream(nicPath)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Stream.empty();
+    });
+```
+
+3) You need to create the IpLoc service, giving the target SQLite database url and the geocoder in the second parameter
+
+```java
+SqliteUtils.executeResource(databaseUrl, "iploc_init.sql"); // Init the SQLite database
+IpLoc ipLoc = new IpLoc(databaseUrl, geocoder);
+```
+
+4) Finally insert the stream of NIC objects in the database with the IpLoc service
+
+```java
+ipLoc.insertNicObjects(nicObjects.stream());
+```
+
+## Notes
+
+There are many improvements that need to be worked on to improve the Iploc module, refer to the Github issues with the
+tag *iploc* if you want to contribute.
+
+## References
+- [https://www.iana.org/numbers](https://www.iana.org/numbers)
+- [https://www.irr.net/docs/list.html](https://www.irr.net/docs/list.html)

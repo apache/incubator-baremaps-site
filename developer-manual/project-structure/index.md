@@ -1,0 +1,17 @@
+---
+layout: default
+title: Project structure
+permalink: /developer-manual/project-structure/
+---
+
+# Project structure
+
+The code is structured in a way that makes it easy to understand and to contribute to the project.
+
+## Modules
+
+TODO
+
+### Baremaps-core
+
+TODO
