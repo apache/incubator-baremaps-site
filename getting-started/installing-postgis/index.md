@@ -1,0 +1,33 @@
+---
+layout: default
+title: Installing PostGIS
+permalink: /getting-started/installing-postgis/
+---
+
+# Installing PostGIS
+
+This step is not required if you plan to execute the Geocoding or IP to location examples.
+
+For the insertion and generation of Vector tiles, you need to set up a [PostGIS](https://postgis.net/) database.
+This database will host all the data required to generate the vector tiles.
+
+The following docker image will allow you to jump start this installation:
+
+```
+docker run \
+  --name baremaps \
+  --publish 5432:5432 \
+  -e POSTGRES_DB=baremaps \
+  -e POSTGRES_USER=baremaps \
+  -e POSTGRES_PASSWORD=baremaps \
+  -d postgis/postgis:latest
+```
+
+You can then stop and start the container with the following commands:
+
+```
+docker stop baremaps
+docker start baremaps
+```
+
+From there you can go to the [Examples](/examples/) section. The [Import OSM data into PostGIS](/examples/openstreetmap/) example is the first step to produce custom high resolution vector tiles.

@@ -1,18 +1,42 @@
 items:
-  - page: <i class="fas fa-bullseye"></i> About
+  - page: <i class="fas fa-info-circle"></i> About
     url: /about/
-  - page: <i class="fas fa-download"></i> Installation
-    url: /installation/
+  - page: <i class="fas fa-rocket"></i> Getting Started
+    url: /getting-started/
+    subitems:
+      - page: Installing the CLI
+        url: /getting-started/installing-the-cli/
+      - page: Installation PostGIS
+        url: /getting-started/installing-postgis/
   - page: <i class="fas fa-vial"></i> Examples
     url: /examples/
     subitems:
-      - page: OpenStreetMap
-        url: /examples/openstreetmap/
-      - page: NaturalEarth
-        url: /examples/naturalearth/
-      - page: Contour
-        url: /examples/contour/
-  - page: <i class="fas fa-paint-roller"></i> Stylesheet
-    url: /stylesheet/
+      - page: Import OSM data into PostGIS
+        url: /examples/import-osm-into-postgis/
+      - page: Import Natural Earth data into PostGIS
+        url: /examples/import-naturalearth-into-postgis/
+      - page: Import contour lines into PostGIS
+        url: /examples/import-contour-into-postgis/
+      - page: Serve vector tiles from PostGIS
+        url: /examples/serve-vector-tiles/
+      - page: Create an IP to location web service
+        url: /examples/ip-to-location/
+      - page: Create a geocoding web service
+        url: /examples/geocoding/
+  - page: <i class="fas fa-code"></i> Developer Manual
+    url: /developer-manual/
+    subitems:
+      - page: Project structure
+        url: /developer-manual/project-structure/
+      - page: How to build with Maven
+        url: /developer-manual/how-to-build-with-maven/
+      - page: Set up in IntelliJ IDEA
+        url: /developer-manual/setup-in-intellij/
+      - page: Geocoder
+        url: /developer-manual/geocoder/
+      - page: IP to location
+        url: /developer-manual/ip-to-location/
+      - page: Stylesheet
+        url: /developer-manual/stylesheet/
   - page: <i class="fas fa-map"></i> Demo
     url: /assets/demo.html

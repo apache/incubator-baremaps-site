@@ -1,0 +1,95 @@
+---
+layout: default
+title: Serve Vector Tiles from PostGIS
+permalink: /examples//serve-vector-tiles/
+---
+
+# Serve Vector Tiles from PostGIS
+
+In this tutorial, we'll learn how to create vector tiles from the data imported into PostGIS.
+
+If you have not yet inserted data into your PostGIS database, please follow one of these three guides:
+
+- [Import OSM data into PostGIS](https://baremaps.apache.org/examples/import-osm-into-postgis/)
+- [Import Natural Earth data into PostGIS](https://baremaps.apache.org/examples/openstreetmap/)
+- [Import Contour lines from the ASTER dataset into PostGIS](https://baremaps.apache.org/examples/openstreetmap/)
+
+If you are in a hurry, consider skipping the "Under the Hood" sections.
+
+## Creating Vector Tiles
+
+In order to create vector tiles, Apache Baremaps requires JSON configuration files. The two configuration files used are:
+
+ - `tileset.json` - Defines all the information needed to retrieve the correct vector tile layers at different zoom levels.
+ - `style.json` - Defines the style of the different layers.
+
+For convenience, we have prepared a `tileset.json` and a `style.json` that correspond to each of the examples.
+
+Each of these files are available in the main repository of Apache Baremaps inside the examples' folder.
+
+- [For OpenStreetMap data](https://github.com/apache/incubator-baremaps/blob/main/examples/openstreetmap/)
+- [For contour lines data](https://github.com/apache/incubator-baremaps/blob/main/examples/contour/)
+- [For Natural Earth data](https://github.com/apache/incubator-baremaps/blob/main/examples/naturalearth/)
+
+First `cd` into one of the example directories that corresponds to the data you inserted inside your PostGIS database.
+Then let's preview and edit the map with the sample configuration files by executing the following command in a terminal.
+
+```
+baremaps map dev \
+  --database 'jdbc:postgresql://localhost:5432/baremaps?user=baremaps&password=baremaps' \
+  --tileset 'tileset.json' \
+  --style 'style.json'
+```
+
+Well done, a local development server should have started.
+You can now visualize the vector tiles in your browser ([http://localhost:9000/](http://localhost:9000/))!
+Notice that the changes in the configuration files are automatically reloaded by the browser.
+
+### Under the Hood (Optional)
+
+Baremaps extensively rely on the fantastic [ST_AsMVT](https://postgis.net/docs/ST_AsMVT.html) functions released by the PostGIS team to produce [Mapbox Vector Tiles](https://docs.mapbox.com/vector-tiles/specification/).
+However, in the following excerpt of the json configuration file, none of these concepts appear in the SQL queries.
+
+```json
+{
+  ...
+  "vector_layers": [
+    {
+      "id": "aeroway",
+      "queries": [
+        {
+          "minzoom": 12,
+          "maxzoom": 20,
+          "sql": "SELECT id, tags, geom FROM osm_nodes WHERE tags ? 'aeroway'"
+        },
+        ...
+      ]
+    },
+  ],
+  ...
+}
+```
+
+Why don't we see these function calls in the configuration?
+Baremaps wants you to focus on the content of the tiles, and relieves you from the burden of writing complex SQL queries.
+In fact, at runtime, Baremaps merges all the queries of the configuration file into a single optimized query that produces vector tiles.
+
+In production, vector tiles are rarely served dynamically. Why is that so?
+First, a large blob store is much cheaper than a relational database to [operate](https://wiki.c2.com/?StorageIsCheap).
+Second, content delivery networks (CDNs) greatly improve web performances by caching static content close to the end user.
+Baremaps has been conceived with these lasting trends in mind.
+The following command produces a local directory containing precomputed static tiles.
+These tiles can be served with Apache, Nginx, or Caddy, but also copied in a blob store behind a content delivery network, such as Cloudflare, Stackpath, or Fastly.
+
+```
+baremaps map export \
+  --database 'jdbc:postgresql://localhost:5432/baremaps?user=baremaps&password=baremaps' \
+  --tileset 'tileset.json' \
+  --repository 'tiles/'
+```
+
+## Conclusion
+
+In this tutorial, we learnt how to create vector tiles from PostGIS data with the help of Apache Baremaps.
+Prior to the release of Apache Baremaps, we believe that creating a pipeline for publishing vector tiles from OpenStreetMap data was a rather time-consuming task.
+As shown in this demonstration, Apache Baremaps tries to bring back the fun to creating a web mapping pipeline!

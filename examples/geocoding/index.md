@@ -1,0 +1,36 @@
+---
+layout: default
+title: Create a geocoding web service
+permalink: /examples/geocoding/
+---
+
+# Create a geocoding web service
+
+In this tutorial, we demonstrate how to create a geocoding index and then serve it in a simple web application.
+
+## Dataset
+
+The data we will be using comes from [Geonames](https://geonames.com).
+
+## Generate the index
+
+The following [workflow](https://raw.githubusercontent.com/apache/incubator-baremaps/main/examples/geocoding/workflow.js) will download the Geonames data, decompress it, and finally build the index.
+
+```
+baremaps workflow execute --file examples/geocoding/workflow.js
+```
+
+## Serve the data
+
+The following command will serve the Geonames index over HTTP in a simple web application.
+
+```
+baremaps geocoder serve --index geonames-index --port 3000
+```
+
+Go to [http://localhost:3000/](http://localhost:3000/) to see it in action.
+
+## Conclusion
+
+In this tutorial, we learnt how to create a Geocoding index and serve it in a simple web application. 
+This will be very useful in a map application to find places quickly by writing an address in a prompt.
