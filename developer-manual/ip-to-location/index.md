@@ -49,9 +49,13 @@ Depending on the size of the OpenStreetMap file, the execution of this command m
 Eventually, the output produced by the command should look as follows.
 
 ```
-[INFO ] 2022-07-26 09:47:40.906 [main] Workflow - Executing workflow workflow.js
+[INFO ] 2022-12-08 12:56:05.417 [main] Execute - Executing the workflow examples/ip-to-location/workflow.js
+[INFO ] 2022-12-08 12:56:06.031 [pool-2-thread-1] DownloadUrl - Downloading https://ftp.ripe.net/ripe/dbase/ripe.db.gz to downloads/ripe.db.gz
+[INFO ] 2022-12-08 12:56:06.031 [pool-2-thread-2] DownloadUrl - Downloading https://download.geonames.org/export/dump/allCountries.zip to downloads/geonames-allcountries.zip
 ...
-[INFO ] 2022-07-26 09:48:21.368 [main] Workflow - Finished executing workflow workflow.js
+...
+...
+[INFO ] 2022-07-26 09:48:21.368 [main] Workflow - Finished executing workflow examples/ip-to-location/workflow.js
 ```
 
 ```
