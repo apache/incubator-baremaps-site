@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Serve Vector Tiles from PostGIS - Apache Baremaps</title>
+    
+    <link rel="stylesheet" href="/assets/css/main.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+          <div class="four columns">
+            <header>
+              <h2 class="logo"><a href="/"><i class="far fa-map"></i> Apache Baremaps</a></h2>
+              <p>Apache Baremaps is a toolkit and a set of infrastructure components for creating, publishing, and operating online maps. It provides a data pipeline enabling developers to build maps with different data sources with live reload capabilities. It provides other services commonly used in online maps, such as location search and IP to location.</p>
+              <p>
+                <a class="github-button" href="https://github.com/apache/incubator-baremaps" data-size="large" data-show-count="true"
+                   aria-label="Star apache/incubator-baremaps on GitHub">Star</a>
+                <a class="github-button" href="https://github.com/apache/incubator-baremaps/releases/latest"
+                   data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large"
+                   aria-label="Download apache/incubator-baremaps on GitHub">Download</a>
+              </p>
+            </header>
+            <nav>
+              <ul>
+                
+                <li>
+                  <a href="/about/"><i class="fas fa-info-circle"></i> About</a>
+                  
+                </li>
+                
+                <li>
+                  <a href="/getting-started/"><i class="fas fa-rocket"></i> Getting Started</a>
+                  
+                  <ul>
+                    
+                    <li><a href="/getting-started/installing-the-cli/">Installing the CLI</a></li>
+                    
+                    <li><a href="/getting-started/installing-postgis/">Installation PostGIS</a></li>
+                    
+                  </ul>
+                  
+                </li>
+                
+                <li>
+                  <a href="/examples/"><i class="fas fa-vial"></i> Examples</a>
+                  
+                  <ul>
+                    
+                    <li><a href="/examples/import-osm-into-postgis/">Import OSM data into PostGIS</a></li>
+                    
+                    <li><a href="/examples/import-naturalearth-into-postgis/">Import Natural Earth data into PostGIS</a></li>
+                    
+                    <li><a href="/examples/import-contour-into-postgis/">Import contour lines into PostGIS</a></li>
+                    
+                    <li><a href="/examples/serve-vector-tiles/">Serve vector tiles from PostGIS</a></li>
+                    
+                    <li><a href="/examples/ip-to-location/">Create an IP to location web service</a></li>
+                    
+                    <li><a href="/examples/geocoding/">Create a geocoding web service</a></li>
+                    
+                  </ul>
+                  
+                </li>
+                
+                <li>
+                  <a href="/developer-manual/"><i class="fas fa-code"></i> Developer Manual</a>
+                  
+                  <ul>
+                    
+                    <li><a href="/developer-manual/project-structure/">Project structure</a></li>
+                    
+                    <li><a href="/developer-manual/how-to-build-with-maven/">How to build with Maven</a></li>
+                    
+                    <li><a href="/developer-manual/setup-in-intellij/">Set up in IntelliJ IDEA</a></li>
+                    
+                    <li><a href="/developer-manual/geocoder/">Geocoder</a></li>
+                    
+                    <li><a href="/developer-manual/ip-to-location/">IP to location</a></li>
+                    
+                    <li><a href="/developer-manual/stylesheet/">Stylesheet</a></li>
+                    
+                  </ul>
+                  
+                </li>
+                
+                <li>
+                  <a href="/assets/demo.html"><i class="fas fa-map"></i> Demo</a>
+                  
+                </li>
+                
+              </ul>
+            </nav>
+          </div>
+          <article class="eight columns">
+            <h1 id="serve-vector-tiles-from-postgis">Serve Vector Tiles from PostGIS</h1>
+
+<p>In this tutorial, we’ll learn how to create vector tiles from the data imported into PostGIS.</p>
+
+<p>If you have not yet inserted data into your PostGIS database, please follow one of these three guides:</p>
+
+<ul>
+  <li><a href="https://baremaps.apache.org/examples/import-osm-into-postgis/">Import OSM data into PostGIS</a></li>
+  <li><a href="https://baremaps.apache.org/examples/openstreetmap/">Import Natural Earth data into PostGIS</a></li>
+  <li><a href="https://baremaps.apache.org/examples/openstreetmap/">Import Contour lines from the ASTER dataset into PostGIS</a></li>
+</ul>
+
+<p>If you are in a hurry, consider skipping the “Under the Hood” sections.</p>
+
+<h2 id="creating-vector-tiles">Creating Vector Tiles</h2>
+
+<p>In order to create vector tiles, Apache Baremaps requires JSON configuration files. The two configuration files used are:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">tileset.json</code> - Defines all the information needed to retrieve the correct vector tile layers at different zoom levels.</li>
+  <li><code class="language-plaintext highlighter-rouge">style.json</code> - Defines the style of the different layers.</li>
+</ul>
+
+<p>For convenience, we have prepared a <code class="language-plaintext highlighter-rouge">tileset.json</code> and a <code class="language-plaintext highlighter-rouge">style.json</code> that correspond to each of the examples.</p>
+
+<p>Each of these files are available in the main repository of Apache Baremaps inside the examples’ folder.</p>
+
+<ul>
+  <li><a href="https://github.com/apache/incubator-baremaps/blob/main/examples/openstreetmap/">For OpenStreetMap data</a></li>
+  <li><a href="https://github.com/apache/incubator-baremaps/blob/main/examples/contour/">For contour lines data</a></li>
+  <li><a href="https://github.com/apache/incubator-baremaps/blob/main/examples/naturalearth/">For Natural Earth data</a></li>
+</ul>
+
+<p>First <code class="language-plaintext highlighter-rouge">cd</code> into one of the example directories that corresponds to the data you inserted inside your PostGIS database.
+Then let’s preview and edit the map with the sample configuration files by executing the following command in a terminal.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>baremaps map dev \
+  --database 'jdbc:postgresql://localhost:5432/baremaps?user=baremaps&amp;password=baremaps' \
+  --tileset 'tileset.json' \
+  --style 'style.json'
+</code></pre></div></div>
+
+<p>Well done, a local development server should have started.
+You can now visualize the vector tiles in your browser (<a href="http://localhost:9000/">http://localhost:9000/</a>)!
+Notice that the changes in the configuration files are automatically reloaded by the browser.</p>
+
+<h3 id="under-the-hood-optional">Under the Hood (Optional)</h3>
+
+<p>Baremaps extensively rely on the fantastic <a href="https://postgis.net/docs/ST_AsMVT.html">ST_AsMVT</a> functions released by the PostGIS team to produce <a href="https://docs.mapbox.com/vector-tiles/specification/">Mapbox Vector Tiles</a>.
+However, in the following excerpt of the json configuration file, none of these concepts appear in the SQL queries.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="err">...</span><span class="w">
+  </span><span class="nl">"vector_layers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"aeroway"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"queries"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"minzoom"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"maxzoom"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"sql"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SELECT id, tags, geom FROM osm_nodes WHERE tags ? 'aeroway'"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="err">...</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="err">...</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Why don’t we see these function calls in the configuration?
+Baremaps wants you to focus on the content of the tiles, and relieves you from the burden of writing complex SQL queries.
+In fact, at runtime, Baremaps merges all the queries of the configuration file into a single optimized query that produces vector tiles.</p>
+
+<p>In production, vector tiles are rarely served dynamically. Why is that so?
+First, a large blob store is much cheaper than a relational database to <a href="https://wiki.c2.com/?StorageIsCheap">operate</a>.
+Second, content delivery networks (CDNs) greatly improve web performances by caching static content close to the end user.
+Baremaps has been conceived with these lasting trends in mind.
+The following command produces a local directory containing precomputed static tiles.
+These tiles can be served with Apache, Nginx, or Caddy, but also copied in a blob store behind a content delivery network, such as Cloudflare, Stackpath, or Fastly.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>baremaps map export \
+  --database 'jdbc:postgresql://localhost:5432/baremaps?user=baremaps&amp;password=baremaps' \
+  --tileset 'tileset.json' \
+  --repository 'tiles/'
+</code></pre></div></div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>In this tutorial, we learnt how to create vector tiles from PostGIS data with the help of Apache Baremaps.
+Prior to the release of Apache Baremaps, we believe that creating a pipeline for publishing vector tiles from OpenStreetMap data was a rather time-consuming task.
+As shown in this demonstration, Apache Baremaps tries to bring back the fun to creating a web mapping pipeline!</p>
+
+            <p><a class="edit" href="https://github.com/apache/incubator-baremaps-site/edit/main/examples/serve-vector-tiles/index.md"><i class="fas fa-edit"></i> Improve this page</a></p>
+          </article>
+      </div>
+    </div>
+    <script async defer src="https://kit.fontawesome.com/14dcd5fdfb.js" crossorigin="anonymous"></script>
+    <script async defer src="https://buttons.github.io/buttons.js" crossorigin="anonymous"></script>
+  </body>
+</html>

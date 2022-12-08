@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>About - Apache Baremaps</title>
-    <meta name="description" content="Create custom vector tiles from OpenStreetMap and other data sources with Postgis and Java.">
+    <meta name="description" content="Apache Baremaps is a toolkit and a set of infrastructure components for creating, publishing, and operating online maps. It provides a data pipeline enabling developers to build maps with different data sources with live reload capabilities. It provides other services commonly used in online maps, such as location search and IP to location.">
     <link rel="stylesheet" href="/assets/css/main.css">
   </head>
   <body>
@@ -13,25 +13,33 @@
           <div class="four columns">
             <header>
               <h2 class="logo"><a href="/"><i class="far fa-map"></i> Apache Baremaps</a></h2>
-              <p>Create custom vector tiles from OpenStreetMap and other data sources with Postgis and Java.</p>
+              <p>Apache Baremaps is a toolkit and a set of infrastructure components for creating, publishing, and operating online maps. It provides a data pipeline enabling developers to build maps with different data sources with live reload capabilities. It provides other services commonly used in online maps, such as location search and IP to location.</p>
               <p>
-                <a class="github-button" href="https://github.com/baremaps/baremaps" data-size="large" data-show-count="true"
-                   aria-label="Star baremaps/baremaps on GitHub">Star</a>
-                <a class="github-button" href="https://github.com/baremaps/baremaps/releases/latest"
+                <a class="github-button" href="https://github.com/apache/incubator-baremaps" data-size="large" data-show-count="true"
+                   aria-label="Star apache/incubator-baremaps on GitHub">Star</a>
+                <a class="github-button" href="https://github.com/apache/incubator-baremaps/releases/latest"
                    data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large"
-                   aria-label="Download baremaps/baremaps on GitHub">Download</a>
+                   aria-label="Download apache/incubator-baremaps on GitHub">Download</a>
               </p>
             </header>
             <nav>
               <ul>
                 
                 <li>
-                  <a href="/about/"><i class="fas fa-bullseye"></i> About</a>
+                  <a href="/about/"><i class="fas fa-info-circle"></i> About</a>
                   
                 </li>
                 
                 <li>
-                  <a href="/installation/"><i class="fas fa-download"></i> Installation</a>
+                  <a href="/getting-started/"><i class="fas fa-rocket"></i> Getting Started</a>
+                  
+                  <ul>
+                    
+                    <li><a href="/getting-started/installing-the-cli/">Installing the CLI</a></li>
+                    
+                    <li><a href="/getting-started/installing-postgis/">Installation PostGIS</a></li>
+                    
+                  </ul>
                   
                 </li>
                 
@@ -40,18 +48,40 @@
                   
                   <ul>
                     
-                    <li><a href="/examples/openstreetmap/">OpenStreetMap</a></li>
+                    <li><a href="/examples/import-osm-into-postgis/">Import OSM data into PostGIS</a></li>
                     
-                    <li><a href="/examples/naturalearth/">NaturalEarth</a></li>
+                    <li><a href="/examples/import-naturalearth-into-postgis/">Import Natural Earth data into PostGIS</a></li>
                     
-                    <li><a href="/examples/contour/">Contour</a></li>
+                    <li><a href="/examples/import-contour-into-postgis/">Import contour lines into PostGIS</a></li>
+                    
+                    <li><a href="/examples/serve-vector-tiles/">Serve vector tiles from PostGIS</a></li>
+                    
+                    <li><a href="/examples/ip-to-location/">Create an IP to location web service</a></li>
+                    
+                    <li><a href="/examples/geocoding/">Create a geocoding web service</a></li>
                     
                   </ul>
                   
                 </li>
                 
                 <li>
-                  <a href="/stylesheet/"><i class="fas fa-paint-roller"></i> Stylesheet</a>
+                  <a href="/developer-manual/"><i class="fas fa-code"></i> Developer Manual</a>
+                  
+                  <ul>
+                    
+                    <li><a href="/developer-manual/project-structure/">Project structure</a></li>
+                    
+                    <li><a href="/developer-manual/how-to-build-with-maven/">How to build with Maven</a></li>
+                    
+                    <li><a href="/developer-manual/setup-in-intellij/">Set up in IntelliJ IDEA</a></li>
+                    
+                    <li><a href="/developer-manual/geocoder/">Geocoder</a></li>
+                    
+                    <li><a href="/developer-manual/ip-to-location/">IP to location</a></li>
+                    
+                    <li><a href="/developer-manual/stylesheet/">Stylesheet</a></li>
+                    
+                  </ul>
                   
                 </li>
                 
@@ -66,11 +96,12 @@
           <article class="eight columns">
             <h1 id="about">About</h1>
 
-<p>Baremaps is an <a href="https://github.com/baremaps/baremaps/blob/master/LICENSE">open source</a> toolkit for creating vector tiles from <a href="https://www.openstreetmap.org">OpenStreetMap</a> and other data sources.</p>
+<p>Apache Baremaps is an  <a href="https://github.com/apache/incubator-baremaps/blob/main/LICENSE">open source</a> toolkit and a set of infrastructure components for creating, publishing, and operating online maps. It provides a data pipeline enabling developers to build maps with different data sources. It offers live reload capabilities that allow cartographers to customize the content and the style of a map. It includes an attribution-free map schema and style that stimulates derived work. Finally, it provides services commonly used in online maps, such as location search and IP to location.</p>
 
 <p><a href="/assets/demo.html"><img src="/assets/screenshot.jpg" alt="State of the map" /></a></p>
 
-<p>It is inspired by <a href="https://github.com/openstreetmap/osmosis">Osmosis</a>, but it comes with additional features, such as the ability to:</p>
+<p>Apache Baremaps is inspired by <a href="https://github.com/openstreetmap/osmosis">Osmosis</a>, but it comes with additional features, such as the ability to:</p>
+
 <ul>
   <li>Process data in parallel with the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html">Stream API</a> introduced in Java 8</li>
   <li>Import data faster with the <a href="https://www.postgresql.org/docs/11/sql-copy.html">COPY API</a> of Postgresql</li>
@@ -78,8 +109,7 @@
   <li>Create and serve customized <a href="https://docs.mapbox.com/vector-tiles/specification/">Vector Tiles</a></li>
 </ul>
 
-<p>On the longer run, the aim of the project is to work with a variety of data sources in order to create highly specialized and customized maps.</p>
-
+<p>On the longer run, the project aims to work with a variety of data sources in order to create highly specialized and customized maps.</p>
 
             <p><a class="edit" href="https://github.com/apache/incubator-baremaps-site/edit/main/about.md"><i class="fas fa-edit"></i> Improve this page</a></p>
           </article>

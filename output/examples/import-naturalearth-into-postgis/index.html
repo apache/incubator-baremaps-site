@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Examples - Apache Baremaps</title>
+    <title>Import Natural Earth data into PostGIS - Apache Baremaps</title>
     
     <link rel="stylesheet" href="/assets/css/main.css">
   </head>
@@ -94,43 +94,49 @@
             </nav>
           </div>
           <article class="eight columns">
-            <h1 id="examples">Examples</h1>
+            <h1 id="import-natural-earth-data-into-postgis">Import Natural Earth data into PostGIS</h1>
 
-<p>The examples will showcase the different uses of the Apache Baremaps toolkits. To run the examples you need to clone or <a href="https://github.com/apache/incubator-baremaps/archive/refs/heads/main.zip">download</a> the main
-repository in order to have access to the <a href="https://github.com/apache/incubator-baremaps/blob/main/examples/">files</a> that have been prepared for the examples.</p>
+<p>In this tutorial, we’ll learn how to use Baremaps to import Natural Earth data in a PostGIS database.</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone git@github.com:apache/incubator-baremaps.git
+<p>Notice that the following steps assume that the Apache Baremaps CLI and PostGIS are <a href="https://www.baremaps.com/getting-started/">installed</a>.</p>
+
+<h2 id="dataset">Dataset</h2>
+
+<p><a href="https://www.naturalearthdata.com/">Natural Earth</a> is a public domain map dataset available at 1:10m, 1:50m, and 1:110 million scales.</p>
+
+<p>The following workflow will download the Natural Earth data, decompress it, and finally import it in the database.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>baremaps workflow execute --file examples/naturalearth/workflow.json
 </code></pre></div></div>
 
-<p>You should have completed the <a href="/getting-started/installing-the-cli">Installation Guide</a> before running the examples.</p>
+<h2 id="working-with-shapefiles-optional">Working with shapefiles (Optional)</h2>
 
-<p>For the creation of custom vector tiles you can follow these guides:</p>
+<p>The NaturalEarth dataset is also distributed in the <a href="https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_countries.zip">shapefile format</a>.
+As demonstrated in the following command, shapefiles can easily be imported in postgis with <code class="language-plaintext highlighter-rouge">ogr2ogr</code>.
+Here, notice that the data is reprojected in WebMercator (EPSG:3857) to improve performance at query time.</p>
 
-<ul>
-  <li>The <a href="/examples/import-osm-into-postgis/">OpenStreetMap</a> example is a good introduction to Baremaps, it shows how to produce high resolution vector tiles.</li>
-  <li>The <a href="/examples/import-naturalearth-into-postgis/">NaturalEarth</a> example shows how to produce low resolution vector tiles.</li>
-  <li>The <a href="/examples/import-contour-into-postgis/">Contour</a> example shows how to produce contour lines from a digital elevation model.</li>
-</ul>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ogr2ogr \
+  -f "PostgreSQL" "PG:host=localhost user=baremaps dbname=baremaps password=baremaps" \
+  "ne_10m_admin_0_countries.shp" \
+  -lco GEOMETRY_NAME=geom \
+  -lco FID=gid \
+  -lco PRECISION=no \
+  -nlt PROMOTE_TO_MULTI \
+  -nln ne_10m_admin_0_countries \
+  -s_srs EPSG:4326 \
+  -t_srs EPSG:3857 \
+  --config OGR_ENABLE_PARTIAL_REPROJECTION TRUE \
+  -overwrite
+</code></pre></div></div>
 
-<p>For the creation of an IP to location service follow this guide:</p>
+<h2 id="conclusion">Conclusion</h2>
 
-<ul>
-  <li>The <a href="/examples/ip-to-location/">IP to location</a> example shows how to create and serve an IP to location service in a simple web application.</li>
-</ul>
+<p>In this tutorial, we learnt how to import Natural Earth data in PostGIS.</p>
 
-<p>If you want to work on Geocoding there is this example:</p>
+<p>Now that you have inserted the data into the PostGIS database, you can use follow the <a href="/examples/serve-vector-tiles">Serve Vector Tiles from PostGIS</a> example to serve
+your PostGIS data directly as Vector Tiles in a web application with live reload capabilities.</p>
 
-<ul>
-  <li>The <a href="/examples/geocoding/">Geocoding</a> example shows how to create and serve a geocoding service in a simple web application.</li>
-</ul>
-
-<p>Developers who want to execute the code, should refer to the developer manual:</p>
-
-<ul>
-  <li>The <a href="/developer-manual/">Developer Manual</a> aims at helping developers to execute the code, understand the structure and contribute to the project.</li>
-</ul>
-
-            <p><a class="edit" href="https://github.com/apache/incubator-baremaps-site/edit/main/examples/index.md"><i class="fas fa-edit"></i> Improve this page</a></p>
+            <p><a class="edit" href="https://github.com/apache/incubator-baremaps-site/edit/main/examples/import-naturalearth-into-postgis/index.md"><i class="fas fa-edit"></i> Improve this page</a></p>
           </article>
       </div>
     </div>

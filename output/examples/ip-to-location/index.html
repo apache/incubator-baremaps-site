@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Examples - Apache Baremaps</title>
+    <title>Create an IP to location web service - Apache Baremaps</title>
     
     <link rel="stylesheet" href="/assets/css/main.css">
   </head>
@@ -94,43 +94,55 @@
             </nav>
           </div>
           <article class="eight columns">
-            <h1 id="examples">Examples</h1>
+            <h1 id="create-an-ip-to-location-web-service">Create an IP to location web service</h1>
 
-<p>The examples will showcase the different uses of the Apache Baremaps toolkits. To run the examples you need to clone or <a href="https://github.com/apache/incubator-baremaps/archive/refs/heads/main.zip">download</a> the main
-repository in order to have access to the <a href="https://github.com/apache/incubator-baremaps/blob/main/examples/">files</a> that have been prepared for the examples.</p>
+<p>In this tutorial, we demonstrate how to create an IP to location index and then serve it in a simple web application.</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone git@github.com:apache/incubator-baremaps.git
+<h2 id="dataset">Dataset</h2>
+
+<p>The data used to create an IP to location index is publicly available from the 5 <a href="https://whatismyipaddress.com/rir">Regional Internet Registries (RIRs)</a></p>
+
+<p>Here is the list of the 5 RIRs.</p>
+
+<ul>
+  <li><a href="https://www.arin.net/">ARIN</a></li>
+  <li><a href="https://www.lacnic.net/">LACNIC</a></li>
+  <li><a href="https://afrinic.net/">AFRINIC</a></li>
+  <li><a href="https://www.ripe.net/">RIPE NCC</a></li>
+  <li><a href="https://www.apnic.net/">APNIC</a></li>
+</ul>
+
+<p>These Regional Internet Registries contain records that link IP address ranges to organisations along with some metadata.
+It is not always possible to extract meaningful data from these registries because they are not normalised.</p>
+
+<h2 id="generate-the-index">Generate the index</h2>
+
+<p>The workflow executed in the following command contains multiple steps.</p>
+
+<ul>
+  <li>Download and decompress the data from the RIRs</li>
+  <li>Download and create a Geocoding index (see the <a href="/examples/geocoding/">Geocoding</a> example)</li>
+  <li>Iterate over every entry in the registries to extract the IP address ranges and the associated metadata to query the Geocoding index and extract a latitude and a longitude.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>baremaps workflow execute --file examples/geocoding/workflow.json
 </code></pre></div></div>
 
-<p>You should have completed the <a href="/getting-started/installing-the-cli">Installation Guide</a> before running the examples.</p>
+<h2 id="serve-the-data">Serve the data</h2>
 
-<p>For the creation of custom vector tiles you can follow these guides:</p>
+<p>The following command will serve the Geonames index over HTTP in a simple web application.</p>
 
-<ul>
-  <li>The <a href="/examples/import-osm-into-postgis/">OpenStreetMap</a> example is a good introduction to Baremaps, it shows how to produce high resolution vector tiles.</li>
-  <li>The <a href="/examples/import-naturalearth-into-postgis/">NaturalEarth</a> example shows how to produce low resolution vector tiles.</li>
-  <li>The <a href="/examples/import-contour-into-postgis/">Contour</a> example shows how to produce contour lines from a digital elevation model.</li>
-</ul>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iploc serve --database iploc.db --port 3000
+</code></pre></div></div>
 
-<p>For the creation of an IP to location service follow this guide:</p>
+<p>Go to <a href="http://localhost:3000/">http://localhost:3000/</a> to see it in action.</p>
 
-<ul>
-  <li>The <a href="/examples/ip-to-location/">IP to location</a> example shows how to create and serve an IP to location service in a simple web application.</li>
-</ul>
+<h2 id="conclusion">Conclusion</h2>
 
-<p>If you want to work on Geocoding there is this example:</p>
+<p>In this tutorial, we learnt how to create an IP to location index and serve it in a simple web application.
+IP to location has many uses, one of which is to locate users that connect to a website to generate statistics.</p>
 
-<ul>
-  <li>The <a href="/examples/geocoding/">Geocoding</a> example shows how to create and serve a geocoding service in a simple web application.</li>
-</ul>
-
-<p>Developers who want to execute the code, should refer to the developer manual:</p>
-
-<ul>
-  <li>The <a href="/developer-manual/">Developer Manual</a> aims at helping developers to execute the code, understand the structure and contribute to the project.</li>
-</ul>
-
-            <p><a class="edit" href="https://github.com/apache/incubator-baremaps-site/edit/main/examples/index.md"><i class="fas fa-edit"></i> Improve this page</a></p>
+            <p><a class="edit" href="https://github.com/apache/incubator-baremaps-site/edit/main/examples/ip-to-location/index.md"><i class="fas fa-edit"></i> Improve this page</a></p>
           </article>
       </div>
     </div>

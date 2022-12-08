@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>IP to location - Apache Baremaps</title>
+    
+    <link rel="stylesheet" href="/assets/css/main.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+          <div class="four columns">
+            <header>
+              <h2 class="logo"><a href="/"><i class="far fa-map"></i> Apache Baremaps</a></h2>
+              <p>Apache Baremaps is a toolkit and a set of infrastructure components for creating, publishing, and operating online maps. It provides a data pipeline enabling developers to build maps with different data sources with live reload capabilities. It provides other services commonly used in online maps, such as location search and IP to location.</p>
+              <p>
+                <a class="github-button" href="https://github.com/apache/incubator-baremaps" data-size="large" data-show-count="true"
+                   aria-label="Star apache/incubator-baremaps on GitHub">Star</a>
+                <a class="github-button" href="https://github.com/apache/incubator-baremaps/releases/latest"
+                   data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large"
+                   aria-label="Download apache/incubator-baremaps on GitHub">Download</a>
+              </p>
+            </header>
+            <nav>
+              <ul>
+                
+                <li>
+                  <a href="/about/"><i class="fas fa-info-circle"></i> About</a>
+                  
+                </li>
+                
+                <li>
+                  <a href="/getting-started/"><i class="fas fa-rocket"></i> Getting Started</a>
+                  
+                  <ul>
+                    
+                    <li><a href="/getting-started/installing-the-cli/">Installing the CLI</a></li>
+                    
+                    <li><a href="/getting-started/installing-postgis/">Installation PostGIS</a></li>
+                    
+                  </ul>
+                  
+                </li>
+                
+                <li>
+                  <a href="/examples/"><i class="fas fa-vial"></i> Examples</a>
+                  
+                  <ul>
+                    
+                    <li><a href="/examples/import-osm-into-postgis/">Import OSM data into PostGIS</a></li>
+                    
+                    <li><a href="/examples/import-naturalearth-into-postgis/">Import Natural Earth data into PostGIS</a></li>
+                    
+                    <li><a href="/examples/import-contour-into-postgis/">Import contour lines into PostGIS</a></li>
+                    
+                    <li><a href="/examples/serve-vector-tiles/">Serve vector tiles from PostGIS</a></li>
+                    
+                    <li><a href="/examples/ip-to-location/">Create an IP to location web service</a></li>
+                    
+                    <li><a href="/examples/geocoding/">Create a geocoding web service</a></li>
+                    
+                  </ul>
+                  
+                </li>
+                
+                <li>
+                  <a href="/developer-manual/"><i class="fas fa-code"></i> Developer Manual</a>
+                  
+                  <ul>
+                    
+                    <li><a href="/developer-manual/project-structure/">Project structure</a></li>
+                    
+                    <li><a href="/developer-manual/how-to-build-with-maven/">How to build with Maven</a></li>
+                    
+                    <li><a href="/developer-manual/setup-in-intellij/">Set up in IntelliJ IDEA</a></li>
+                    
+                    <li><a href="/developer-manual/geocoder/">Geocoder</a></li>
+                    
+                    <li><a href="/developer-manual/ip-to-location/">IP to location</a></li>
+                    
+                    <li><a href="/developer-manual/stylesheet/">Stylesheet</a></li>
+                    
+                  </ul>
+                  
+                </li>
+                
+                <li>
+                  <a href="/assets/demo.html"><i class="fas fa-map"></i> Demo</a>
+                  
+                </li>
+                
+              </ul>
+            </nav>
+          </div>
+          <article class="eight columns">
+            <h1 id="ip-to-location">IP to location</h1>
+
+<p>Using data publicly available from the 5 <a href="https://whatismyipaddress.com/rir">Regional Internet Registries (RIRs)</a> 
+we are able to generate a stream of objects detailing Internet resource allocations. We call these NIC Objects 
+(Network Information Centre Objects).</p>
+
+<p>Here is the list of the 5 RIRs.</p>
+
+<ul>
+  <li><a href="https://www.arin.net/">ARIN</a></li>
+  <li><a href="https://www.lacnic.net/">LACNIC</a></li>
+  <li><a href="https://afrinic.net/">AFRINIC</a></li>
+  <li><a href="https://www.ripe.net/">RIPE NCC</a></li>
+  <li><a href="https://www.apnic.net/">APNIC</a></li>
+</ul>
+
+<p>Using the list of NIC objects, we extract those that concern IPv4 address ranges (<a href="https://www.ripe.net/manage-ips-and-asns/db/support/documentation/ripe-database-documentation/rpsl-object-types/4-2-descriptions-of-primary-objects/4-2-4-description-of-the-inetnum-object">INETNUM</a>)
+, then using the Baremaps Geocoder API, we iterate through the extracted NIC objects to geo-locate each one of them.</p>
+
+<p>The resulting geo-localised IPv4 address ranges are stored in a SQLite database which can be easily queried to geo-locate a specific IP.</p>
+
+<p>A NIC object contains a list of attributes but these attributes are not consistent between each NIC object. 
+We try to use these 4 attributes to query the Geocoder service :</p>
+
+<ul>
+  <li><em>address</em> contains the address of the NIC Object</li>
+  <li><em>descr</em> sometimes contains the address of the NIC Object</li>
+  <li><em>country</em> contains the country code in ISO format (ISO 3166) - <a href="https://www.ripe.net/participate/member-support/list-of-members/list-of-country-codes-and-rirs">RIPE list of country codes</a></li>
+  <li><em>geoloc</em> contains the latitude and longitude which can be used directly</li>
+</ul>
+
+<p>Some NIC Objects contain a reference to an organisation, and the organisation’s NIC Object itself contains the 
+geo-localisation information. However, we don’t make use of that for now.</p>
+
+<p>The <a href="https://www.ripe.net/manage-ips-and-asns/db/support/documentation/ripe-database-documentation/ripe-database-structure">structure of the RIPE database</a>
+should be applicable to all the RIRs.</p>
+
+<h2 id="generating-the-ip-to-location-database">Generating the IP to location database</h2>
+
+<p>A workflow is a directed acyclic graph of steps executed by Baremaps. To download and import the sample OSM data in Postgres, execute the following <a href="https://raw.githubusercontent.com/apache/incubator-baremaps/main/examples/ip-to-location/workflow.js">workflow</a>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>baremaps workflow execute --file examples/ip-to-location/workflow.js
+</code></pre></div></div>
+
+<p>Depending on the size of the OpenStreetMap file, the execution of this command may take some time.
+Eventually, the output produced by the command should look as follows.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[INFO ] 2022-12-08 12:56:05.417 [main] Execute - Executing the workflow examples/ip-to-location/workflow.js
+[INFO ] 2022-12-08 12:56:06.031 [pool-2-thread-1] DownloadUrl - Downloading https://ftp.ripe.net/ripe/dbase/ripe.db.gz to downloads/ripe.db.gz
+[INFO ] 2022-12-08 12:56:06.031 [pool-2-thread-2] DownloadUrl - Downloading https://download.geonames.org/export/dump/allCountries.zip to downloads/geonames-allcountries.zip
+...
+...
+...
+[INFO ] 2022-07-26 09:48:21.368 [main] Workflow - Finished executing workflow examples/ip-to-location/workflow.js
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iploc serve --database iploc.db --port 3000
+</code></pre></div></div>
+
+<h2 id="code-usage">Code usage</h2>
+
+<p>In order to generate the SQLite database that contains the geo-localised IP address ranges you must follow a few steps.</p>
+
+<p>1) First you need to load/build a Geocoder which will be used to query the addresses contained in the NIC objects.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Geocoder</span> <span class="n">geocoder</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">GeonamesGeocoder</span><span class="o">(</span><span class="n">indexPath</span><span class="o">,</span> <span class="n">dataUri</span><span class="o">);</span>
+<span class="n">geocoder</span><span class="o">.</span><span class="na">build</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>2) Then you need to generate a Stream of NIC Objects. You can use the Nic Fetcher to automatically download all of the NIC Objects from the 5 RIRs.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">Path</span><span class="o">&gt;</span> <span class="n">nicPathsStream</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">NicFetcher</span><span class="o">().</span><span class="na">fetch</span><span class="o">();</span>
+<span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">NicObject</span><span class="o">&gt;</span> <span class="n">nicObjectStream</span> <span class="o">=</span>
+    <span class="n">nicPathsStream</span><span class="o">.</span><span class="na">flatMap</span><span class="o">(</span><span class="n">nicPath</span> <span class="o">-&gt;</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="nc">NicParser</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="k">new</span> <span class="nc">BufferedInputStream</span><span class="o">(</span><span class="nc">Files</span><span class="o">.</span><span class="na">newInputStream</span><span class="o">(</span><span class="n">nicPath</span><span class="o">)));</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="nc">Stream</span><span class="o">.</span><span class="na">empty</span><span class="o">();</span>
+    <span class="o">});</span>
+</code></pre></div></div>
+
+<p>3) You need to create the IpLoc service, giving the target SQLite database url and the geocoder in the second parameter</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">SqliteUtils</span><span class="o">.</span><span class="na">executeResource</span><span class="o">(</span><span class="n">databaseUrl</span><span class="o">,</span> <span class="s">"iploc_init.sql"</span><span class="o">);</span> <span class="c1">// Init the SQLite database</span>
+<span class="nc">IpLoc</span> <span class="n">ipLoc</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">IpLoc</span><span class="o">(</span><span class="n">databaseUrl</span><span class="o">,</span> <span class="n">geocoder</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>4) Finally insert the stream of NIC objects in the database with the IpLoc service</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ipLoc</span><span class="o">.</span><span class="na">insertNicObjects</span><span class="o">(</span><span class="n">nicObjects</span><span class="o">.</span><span class="na">stream</span><span class="o">());</span>
+</code></pre></div></div>
+
+<h2 id="notes">Notes</h2>
+
+<p>There are many improvements that need to be worked on to improve the Iploc module, refer to the Github issues with the
+tag <em>iploc</em> if you want to contribute.</p>
+
+<h2 id="references">References</h2>
+<ul>
+  <li><a href="https://www.iana.org/numbers">https://www.iana.org/numbers</a></li>
+  <li><a href="https://www.irr.net/docs/list.html">https://www.irr.net/docs/list.html</a></li>
+</ul>
+
+            <p><a class="edit" href="https://github.com/apache/incubator-baremaps-site/edit/main/developer-manual/ip-to-location/index.md"><i class="fas fa-edit"></i> Improve this page</a></p>
+          </article>
+      </div>
+    </div>
+    <script async defer src="https://kit.fontawesome.com/14dcd5fdfb.js" crossorigin="anonymous"></script>
+    <script async defer src="https://buttons.github.io/buttons.js" crossorigin="anonymous"></script>
+  </body>
+</html>
