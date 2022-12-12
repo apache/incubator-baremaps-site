@@ -25,10 +25,10 @@ baremaps workflow execute --file examples/geocoding/workflow.js
 The following command will serve the Geonames index over HTTP in a simple web application.
 
 ```
-baremaps geocoder serve --index geonames-index --port 3000
+baremaps geocoder serve --index geocoder-index --port 9000
 ```
 
-Go to [http://localhost:3000/](http://localhost:3000/) to see it in action.
+Go to [http://localhost:9000/](http://localhost:9000/) to see it in action.
 
 ## Conclusion
 
