@@ -40,10 +40,10 @@ baremaps workflow execute --file examples/geocoding/workflow.json
 The following command will serve the Geonames index over HTTP in a simple web application.
 
 ```
-iploc serve --database iploc.db --port 3000
+iploc serve --database iploc.db --port 9000
 ```
 
-Go to [http://localhost:3000/](http://localhost:3000/) to see it in action.
+Go to [http://localhost:9000/](http://localhost:9000/) to see it in action.
 
 ## Conclusion
 
