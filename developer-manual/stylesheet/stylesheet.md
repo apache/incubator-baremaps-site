@@ -6,7 +6,13 @@ permalink: /developer-manual/stylesheet/
 
 # Stylesheet
 
-[OpenStreetMap Vecto](https://github.com/baremaps/openstreetmap-vecto) is an ongoing effort to build a general-purpose configuration and stylesheet for Baremaps.
-It is used to generate vector tiles and to produce a Mapbox [stylesheet](https://docs.mapbox.com/mapbox-gl-js/style-spec/) inspired by [OpenStreetMap Carto](https://github.com/gravitystorm/openstreetmap-carto).
+Baremaps comes with a 
+[default tileset and stylesheet](https://github.com/apache/incubator-baremaps/tree/main/basemap) 
+that can be used to generate vector tiles. The stylesheet is based on the
+[OpenStreetMap Carto](https://github.com/gravitystorm/openstreetmap-carto)
+style. 
 
-[![State of the map](/assets/screenshot.jpg)](/assets/demo.html)
+[![State of the map](/assets/screenshot.jpg)](https://demo.baremaps.com/)
+
+It is an ongoing effort to create an attribution-free map style.
+Your contributions are welcome.
