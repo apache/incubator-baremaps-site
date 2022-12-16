@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Import contour lines data into PostGIS - Apache Baremaps</title>
+    <title>Contour Lines in Vector Tiles - Apache Baremaps</title>
     
     <link rel="stylesheet" href="/assets/css/main.css">
   </head>
@@ -94,56 +94,95 @@
             </nav>
           </div>
           <article class="eight columns">
-            <h1 id="import-contour-lines-data-into-postgis">Import contour lines data into PostGIS</h1>
+            <h1 id="contour-lines-in-vector-tiles">Contour Lines in Vector Tiles</h1>
 
-<p>In this tutorial, we demonstrate how to produce contours from a digital elevation model (DEM).</p>
+<p>Contour lines are a key element in topographic maps, as they allow us to 
+visualize the elevation of an area. In this tutorial, we will show you how 
+to create contour lines from a digital elevation model (DEM) and display 
+them using vector tiles.</p>
 
-<p>Notice that the following steps assume that the Apache Baremaps CLI and PostGIS are <a href="https://www.baremaps.com/getting-started/">installed</a>.</p>
+<h2 id="prerequisites">Prerequisites</h2>
 
-<h2 id="dataset">Dataset</h2>
-
-<p>The approach consists in using the <a href="https://gdal.org/programs/gdal_contour.html"><code class="language-plaintext highlighter-rouge">gdal_contour</code></a> command.
-Therefore, start by installing <code class="language-plaintext highlighter-rouge">gdal</code>:</p>
+<p>To follow this tutorial, you will need to have <code class="language-plaintext highlighter-rouge">gdal</code> installed on your 
+system. If you don’t have it already, you can install it by running the 
+following command:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get <span class="nb">install </span>gdal-bin
 </code></pre></div></div>
 
-<p>The geotiff present in this directory comes from the <a href="https://asterweb.jpl.nasa.gov/gdem.asp">ASTER</a> dataset.
-We used the following command to reproject the geotiff in the desired projection (e.g. WebMercator) before importing it in the database.</p>
+<h2 id="reprojecting-the-geotiff">Reprojecting the GeoTiff</h2>
+
+<p>We will be using the <a href="https://asterweb.jpl.nasa.gov/gdem.asp">ASTER</a> dataset 
+for this example. The geotiff file provided in this tutorial is already in 
+the desired projection (WebMercator), but in case you want to use a different 
+geotiff file, you can use the gdalwarp command to reproject it. Here’s an 
+example of how to do it:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gdalwarp -rc \
   -s_srs epsg:4326 -t_srs epsg:3857 \
   -dstnodata 0 -of GTiff -co tiled=yes \
-  examples/contour/liecthenstein-aster-dem-v2.tif \
-  examples/contour/liecthenstein-aster-dem-v2-3857.tif
+  liecthenstein-aster-dem-v2.tif \
+  liecthenstein-aster-dem-v2-3857.tif
 </code></pre></div></div>
 
-<h2 id="importing-the-data-into-postgis">Importing the data into PostGIS</h2>
+<h2 id="generating-the-contour-lines">Generating the Contour Lines</h2>
 
-<p>You can now import any GeoTiff DEM as contours in postgis. 
-In the following command, the <code class="language-plaintext highlighter-rouge">-nln</code> argument name the table that contains the data, 
-the <code class="language-plaintext highlighter-rouge">-a</code> argument name the column that contains the elevation, 
-the <code class="language-plaintext highlighter-rouge">-i</code> argument specifies the interval in meters at which contours are generated.</p>
+<p>Now that we have the GeoTiff in the desired projection, 
+we can use the gdal_contour command to generate the contour lines. 
+The <code class="language-plaintext highlighter-rouge">-a</code> argument specifies the column that contains the elevation data, 
+the <code class="language-plaintext highlighter-rouge">-i</code> argument specifies the interval at which contours 
+should be generated (in this case, we are using 10 meters), 
+and the <code class="language-plaintext highlighter-rouge">-nln</code> argument names the table that will contain the data.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gdal_contour \
   -a elevation -nln aster_dem -i 10 \
   -f PostgreSQL \
-  examples/contour/liecthenstein-aster-dem-v2-3857.tif "PG:host=localhost user=baremaps password=baremaps dbname=baremaps"
+  liecthenstein-aster-dem-v2-3857.tif "PG:host=localhost user=baremaps password=baremaps dbname=baremaps"
 </code></pre></div></div>
 
-<p>Some index can now be added to the database to improve performances. 
-When available, a smoothing function such as <code class="language-plaintext highlighter-rouge">ST_ChaikinSmoothing</code> can be used to improve rendering of the contours.</p>
+<h2 id="improving-performance-with-indexes">Improving Performance with Indexes</h2>
+
+<p>To improve the performance of the contour lines, 
+we can add some indexes to the database. 
+Here’s an example of how to create a <code class="language-plaintext highlighter-rouge">SPGIST</code> index:</p>
 
 <pre><code class="language-postgresql">DROP INDEX IF EXISTS aster_dem_gix;
-CREATE INDEX CONCURRENTLY IF NOT EXISTS aster_dem_gix ON aster_dem USING SPGIST(wkb_geometry);
+CREATE INDEX IF NOT EXISTS aster_dem_gix ON aster_dem USING SPGIST(wkb_geometry);
 </code></pre>
 
-<h2 id="conclusion">Conclusion</h2>
+<h2 id="displaying-the-contour-lines">Displaying the Contour Lines</h2>
 
-<p>In this tutorial, we learnt how to import contour lines in PostGIS.</p>
+<p>Finally, we can use Baremaps to display the contour lines in a web browser. 
+To do this, run the following command:</p>
 
-<p>Now that you have inserted the contour data into the PostGIS database, you can use follow the <a href="/examples/serve-vector-tiles">Serve Vector Tiles from PostGIS</a> example to serve
-your PostGIS data directly as Vector Tiles in a web application with live reload capabilities.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>baremaps map dev <span class="se">\</span>
+  <span class="nt">--database</span> <span class="s1">'jdbc:postgresql://localhost:5432/baremaps?user=baremaps&amp;password=baremaps'</span> <span class="se">\</span>
+  <span class="nt">--tileset</span> <span class="s1">'tileset.json'</span> <span class="se">\</span>
+  <span class="nt">--style</span> <span class="s1">'style.json'</span>
+</code></pre></div></div>
+
+<p>This will start the tile server and automatically reload the configuration 
+files when you make changes. You can then preview the map in your 
+web browser.</p>
+
+<h2 id="optional-smoothing-the-contour-lines">Optional: Smoothing the Contour Lines</h2>
+
+<p>If you want to improve the rendering of the contour lines, you can use 
+a smoothing function like ST_ChaikinSmoothing. This function takes 
+a geometry as input and returns a smoothed version of that geometry. 
+Here’s an example of how you could use it:</p>
+
+<pre><code class="language-postgresql">UPDATE aster_dem
+SET wkb_geometry = ST_ChaikinSmoothing(wkb_geometry, 0.1)
+</code></pre>
+
+<p>Keep in mind that this step is optional and might not be necessary depending 
+on the quality of your input data. You can experiment with different 
+smoothing parameters to find the best balance between smoothness and 
+preservation of original features.</p>
+
+<p>That’s it! You now know how to generate and display contour lines from 
+a digital elevation model using vector tiles. Happy mapping!</p>
 
             <p><a class="edit" href="https://github.com/apache/incubator-baremaps-site/edit/main/examples/import-contour-into-postgis/index.md"><i class="fas fa-edit"></i> Improve this page</a></p>
           </article>
