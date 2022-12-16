@@ -39,4 +39,4 @@ items:
       - page: Stylesheet
         url: /developer-manual/stylesheet/
   - page: <i class="fas fa-map"></i> Demo
-    url: /assets/demo.html
+    url: https://demo.baremaps.com/
