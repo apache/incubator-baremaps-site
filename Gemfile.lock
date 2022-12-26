@@ -211,6 +211,8 @@ GEM
       jekyll-feed (~> 0.9)
       jekyll-seo-tag (~> 2.1)
     minitest (5.16.3)
+    nokogiri (1.13.9-aarch64-linux)
+      racc (~> 1.4)
     nokogiri (1.13.9-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.13.9-x86_64-linux)
@@ -254,6 +256,7 @@ GEM
     zeitwerk (2.6.6)
 
 PLATFORMS
+  aarch64-linux
   x86_64-darwin-21
   x86_64-linux
 
