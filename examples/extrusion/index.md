@@ -1,9 +1,10 @@
 ---
-layout: default 
-title: Extrusion Example
+layout: default
+title: Extrusion of vector tiles from OSM data
+permalink: /examples/extrusion/
 ---
 
-# Extrusion Example
+# Extrusion of vector tiles from OSM data
 
 This example builds upon the [OpenStreetMap example](https://www.baremaps.com/examples/openstreetmap/) and shows how 3d
 buildings can be extruded with Maplibre. First, start by downloading the OSM data for London in the current directory.
@@ -11,7 +12,7 @@ buildings can be extruded with Maplibre. First, start by downloading the OSM dat
 To import London data in the database.
 
 ```
-baremaps workflow execute --file workflow.json
+baremaps workflow execute --file examples/extrusion/workflow.json
 ```
 
 In the [tileset.json](https://raw.githubusercontent.com/apache/incubator-baremaps/main/examples/extrusion/tileset.json)
@@ -72,3 +73,7 @@ Well done, a map of London with extruded buildings should now appear in your [br
 
 ![Tile viewer](screenshot.png)
 
+
+## Conclusion
+
+In this tutorial, we learnt how to import OSM data in PostGIS with a workflow and then use the MVT specification to extrude the vector tiles into a 3d object.

@@ -19,6 +19,8 @@ items:
         url: /examples/import-contour-into-postgis/
       - page: Serve vector tiles from PostGIS
         url: /examples/serve-vector-tiles/
+      - page: Extrusion of vector tiles from OSM data
+        url: /examples/extrusion/
       - page: Create an IP to location web service
         url: /examples/ip-to-location/
       - page: Create a geocoding web service

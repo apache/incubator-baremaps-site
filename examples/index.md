@@ -20,6 +20,7 @@ For the creation of custom vector tiles you can follow these guides:
 - The [OpenStreetMap](/examples/import-osm-into-postgis/) example is a good introduction to Baremaps, it shows how to produce high resolution vector tiles.
 - The [NaturalEarth](/examples/import-naturalearth-into-postgis/) example shows how to produce low resolution vector tiles.
 - The [Contour](/examples/import-contour-into-postgis/) example shows how to produce contour lines from a digital elevation model.
+- The [Extrusion](/examples/extrusion/) example shows how to import OSM data into postgis and use the MVT specification to extrude the vectors into 3d.
 
 For the creation of an IP to location service follow this guide:
 
