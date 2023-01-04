@@ -10,6 +10,9 @@
 <loc>/examples/ip-to-location/</loc>
 </url>
 <url>
+<loc>/examples/extrusion/</loc>
+</url>
+<url>
 <loc>/examples/serve-vector-tiles/</loc>
 </url>
 <url>
@@ -71,6 +74,6 @@
 </url>
 <url>
 <loc>/assets/demo.html</loc>
-<lastmod>2022-12-16T21:09:55+00:00</lastmod>
+<lastmod>2023-01-04T15:29:50+00:00</lastmod>
 </url>
 </urlset>
