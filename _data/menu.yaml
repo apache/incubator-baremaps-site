@@ -21,6 +21,8 @@ items:
         url: /examples/serve-vector-tiles/
       - page: Extrusion of vector tiles from OSM data
         url: /examples/extrusion/
+      - page: Create 3d tiles and visualize them with Cesium
+        url: /examples/3d-tiles/
       - page: Create an IP to location web service
         url: /examples/ip-to-location/
       - page: Create a geocoding web service
