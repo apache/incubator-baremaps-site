@@ -96,9 +96,28 @@
             </nav>
           </div>
           <article class="eight columns">
-            <h1 id="how-to-build-with-maven">How to build with Maven</h1>
+            <h1 id="how-to-build-with-maven">How to Build with Maven</h1>
 
-<p>TODO</p>
+<blockquote>
+  <p>If you are using Windows, you will need to use mvnw.cmd instead of ./mvnw and use set instead of export to set the environment variable.</p>
+</blockquote>
+
+<p>Navigate to the root directory of your project.</p>
+
+<p>To to build the project without running the tests run the command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./mvnw clean install -DskipTests 
+</code></pre></div></div>
+
+<p>To unzip the distribution, run the command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>unzip ./baremaps-cli/target/baremaps.zip
+</code></pre></div></div>
+
+<p>To add the distribution to your system’s PATH environment variable, run the command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export PATH=$PATH:pwd/baremaps
+</code></pre></div></div>
 
             <p><a class="edit" href="https://github.com/apache/incubator-baremaps-site/edit/main/developer-manual/how-to-build-with-maven/index.md"><i class="fas fa-edit"></i> Improve this page</a></p>
           </article>
