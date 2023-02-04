@@ -98,26 +98,53 @@
           <article class="eight columns">
             <h1 id="how-to-build-with-maven">How to Build with Maven</h1>
 
-<blockquote>
-  <p>If you are using Windows, you will need to use mvnw.cmd instead of ./mvnw and use set instead of export to set the environment variable.</p>
-</blockquote>
+<p>This guide describes the basics of compiling Baremaps from source. In order to run Apache Baremaps, you first need to install Java 17 or a later version.
+<a href="https://sdkman.io/" target="_blank">SDKMAN</a> provides a convenient Command Line Interface (CLI) to install and upgrade Java. We also suggest you use the most recent version of Maven
+to compile <a href="https://maven.apache.org/download.cgi" target="_blank">(at least 3.x.x)</a>.</p>
 
-<p>Navigate to the root directory of your project.</p>
+<h3 id="linux-or-osx">Linux or OSX</h3>
 
-<p>To to build the project without running the tests run the command:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./mvnw clean install -DskipTests 
+<p>To start you can run the command <code class="language-plaintext highlighter-rouge">mvn clean package</code> from the root folder of the Baremaps project.  Upon successful
+compilation you should see something similar to the following output in your terminal.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[INFO] Building zip: /path-to-project/baremaps/baremaps-cli/target/baremaps.zip
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for baremaps 0.7.1-SNAPSHOT:
+[INFO] 
+[INFO] baremaps ........................................... SUCCESS [  4.172 s]
+[INFO] baremaps-core ...................................... SUCCESS [ 59.018 s]
+[INFO] baremaps-benchmark ................................. SUCCESS [  1.775 s]
+[INFO] baremaps-ogcapi .................................... SUCCESS [  9.796 s]
+[INFO] baremaps-server .................................... SUCCESS [  0.787 s]
+[INFO] baremaps-cli ....................................... SUCCESS [ 20.687 s]
+[INFO] ------------------------------------------------------------------------
 </code></pre></div></div>
 
-<p>To unzip the distribution, run the command:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>unzip ./baremaps-cli/target/baremaps.zip
+<p>It is important to note the first line in the output above that notes where the location of the <code class="language-plaintext highlighter-rouge">baremaps.zip</code> file resides.
+Referencing the location of the <code class="language-plaintext highlighter-rouge">baremaps.zip</code> file, you can run the following to unzip 
+and place Baremaps into your <code class="language-plaintext highlighter-rouge">PATH</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ unzip /path-to-project/baremaps/baremaps-cli/target/baremaps.zip
+$ export PATH=$PATH:`pwd`/baremaps/bin
 </code></pre></div></div>
 
-<p>To add the distribution to your system’s PATH environment variable, run the command:</p>
+<p>Executing the <code class="language-plaintext highlighter-rouge">baremaps</code> command should now result in an output similar to the following:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export PATH=$PATH:pwd/baremaps
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Usage: baremaps [COMMAND]
+A toolkit for producing vector tiles.
+Commands:
+  import  Import OpenStreetMap data in the Postgresql database.
+  update  Update OpenStreetMap data in the Postgresql database.
+  export  Export vector tiles from the Postgresql database.
+  serve   Serve vector tiles from the the Postgresql database.
 </code></pre></div></div>
+
+<p>From here, head into <a href="/getting-started/installing-postgis/">Installing PostGIS</a> if you plan to work with vector tiles.</p>
+
+<p>If you want to work on <a href="/examples/geocoding/">Geocoding</a> or
+<a href="/examples/ip-to-location/">IP to location</a>, head directly into the related examples.</p>
+
+<h3 id="windows">Windows</h3>
+
+<p>If you are using Windows, you will need to use <code class="language-plaintext highlighter-rouge">mvnw.cmd</code> instead of <code class="language-plaintext highlighter-rouge">./mvnw</code> and use set instead of export to set the environment variable.</p>
 
             <p><a class="edit" href="https://github.com/apache/incubator-baremaps-site/edit/main/developer-manual/how-to-build-with-maven/index.md"><i class="fas fa-edit"></i> Improve this page</a></p>
           </article>
