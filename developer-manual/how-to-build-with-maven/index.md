@@ -4,7 +4,7 @@ title: How to build with Maven
 permalink: /developer-manual/how-to-build-with-maven/
 ---
 
-# How to build with Maven
+# How to Build with Maven
 
 This guide describes the basics of compiling Baremaps from source. In order to run Apache Baremaps, you first need to install Java 17 or a later version.
 [SDKMAN](https://sdkman.io/){:target="_blank"} provides a convenient Command Line Interface (CLI) to install and upgrade Java. We also suggest you use the most recent version of Maven
@@ -53,5 +53,6 @@ From here, head into [Installing PostGIS](/getting-started/installing-postgis/) 
 If you want to work on [Geocoding](/examples/geocoding/) or
 [IP to location](/examples/ip-to-location/), head directly into the related examples.
 
-### Windows TODO...
+### Windows
 
+If you are using Windows, you will need to use `mvnw.cmd` instead of `./mvnw` and use set instead of export to set the environment variable.

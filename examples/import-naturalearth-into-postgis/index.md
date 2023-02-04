@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Import Natural Earth data into PostGIS
-permalink: /examples//import-naturalearth-into-postgis/
+permalink: /examples/import-naturalearth-into-postgis/
 ---
 
 # Import Natural Earth data into PostGIS
