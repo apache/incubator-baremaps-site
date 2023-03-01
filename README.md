@@ -1,23 +1,23 @@
-Apache Baremaps Website
----
+# Nextra Docs Template 
 
-This repository holds the content of the [baremaps.apache.org](https://baremaps.apache.org/) website.
+This is a template for creating documentation with [Nextra](https://nextra.site).
 
-The website is generated using [Jekyll](https://jekyllrb.com/),
-as configured by the [.asf.yaml file](https://cwiki.apache.org/confluence/display/INFRA/Git+-+.asf.yaml+features#Git.asf.yamlfeatures-JekyllCMS)
+[**Live Demo →**](https://nextra-docs-template.vercel.app)
 
-Changes to the `main` branch should be live within a few minutes.
+[![](.github/screenshot.png)](https://nextra-docs-template.vercel.app)
 
-The website builds can be followed on [ci2.apache.org](https://ci2.apache.org/), the `jekyll_websites``
-builder can be found at https://ci2.apache.org/#/builders/7 as I write this.
+## Quick Start
 
-The Baremaps source code is at https://github.com/apache/incubator-baremaps
+Click the button to clone this repository and deploy it on Vercel:
 
-## How to stage changes
-TODO, clarify the `.asf.yaml` setup for this.
+[![](https://vercel.com/button)](https://vercel.com/new/clone?s=https%3A%2F%2Fgithub.com%2Fshuding%2Fnextra-docs-template&showOptionalTeamCreation=false)
 
-## How to test the website locally
+## Local Development
 
-There are many ways to do this, including
+First, run `pnpm i` to install the dependencies.
 
-    docker run -p 4000:4000 -v $(pwd):/site bretfisher/jekyll-serve
+Then, run `pnpm dev` to start the development server and visit localhost:3000.
+
+## License
+
+This project is licensed under the MIT License.

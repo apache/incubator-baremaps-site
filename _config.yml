@@ -1,7 +1,0 @@
-title: Apache Baremaps
-repository: apache/incubator-baremaps-site
-plugins:
-  - jekyll-sitemap
-  - jekyll-gist
-  - jekyll-github-metadata
-  - jekyll-optional-front-matter
