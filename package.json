@@ -4,9 +4,9 @@
   "description": "Nextra docs template",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
     "start": "next start",
-    "export": "next build"
+    "build": "next build && next export",
+    "static": "next build && next export && serve ./out"
   },
   "repository": {
     "type": "git",
@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "@types/node": "18.11.10",
+    "serve": "^14.2.0",
     "typescript": "^4.9.3"
   }
 }
