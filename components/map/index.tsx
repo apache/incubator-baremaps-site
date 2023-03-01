@@ -11,8 +11,8 @@ import styles from './style.module.css'
 export default function Map() {
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const [lng] = useState(139.753);
-    const [lat] = useState(35.6844);
+    const [lng] = useState(6.625);
+    const [lat] = useState(46.510);
     const [zoom] = useState(14);
 
     useEffect(() => {
