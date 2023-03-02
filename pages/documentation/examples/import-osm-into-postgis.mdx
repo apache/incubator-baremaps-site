@@ -1,0 +1,80 @@
+---
+layout: default
+title: Import OSM data into PostGIS
+permalink: /examples//import-osm-into-postgis/
+---
+
+# Import OSM data into PostGIS
+
+In this tutorial, we'll learn how to use Baremaps to import contour lines data in a PostGIS database.
+
+Notice that the following steps assume that the Apache Baremaps CLI and PostGIS are [installed](https://www.baremaps.com/getting-started/).
+
+Also, if you are in a hurry, consider skipping the "Under the Hood" sections.
+
+## Dataset
+
+OpenStreetMap (OSM) is a free and editable map of the world.
+It is maintained by a community of passionate volunteers in a way which is similar to Wikipedia.
+Every week, OpenStreetMap publishes a [full dump](https://planet.openstreetmap.org/) of its data in two flavours: a large XML file of about 90GB and a more compact binary file of about 50GB in the  [Protocol Buffer Format](https://developers.google.com/protocol-buffers) (PBF).
+As processing such large files can take several hours, [Geofabrik](http://www.geofabrik.de/data/download.html) regularly publishes smaller extracts of OSM for specific regions.
+In this example we will use a tiny extract of OSM for [Liechtenstein](https://en.wikipedia.org/wiki/Liechtenstein), which is suitable for fast experiments.
+
+## Importing OpenStreetMap Data
+
+A workflow is a directed acyclic graph of steps executed by Baremaps.
+To download and import the sample OSM data in Postgres, execute the following [workflow](https://raw.githubusercontent.com/apache/incubator-baremaps/main/examples/openstreetmap/workflow.json).
+
+```
+baremaps workflow execute --file examples/openstreetmap/workflow.json
+```
+
+Depending on the size of the OpenStreetMap file, the execution of this command may take some time.
+Eventually, the output produced by the command should look as follows.
+
+```
+[INFO ] 2022-07-26 09:47:40.906 [main] Workflow - Executing workflow workflow.json
+[INFO ] 2022-07-26 09:47:41.208 [pool-2-thread-1] DownloadUrl - Downloading https://download.geofabrik.de/europe/liechtenstein-latest.osm.pbf to liechtenstein-latest.osm.pbf
+[INFO ] 2022-07-26 09:48:14.496 [pool-2-thread-1] DownloadUrl - Finished downloading https://download.geofabrik.de/europe/liechtenstein-latest.osm.pbf to liechtenstein-latest.osm.pbf
+[INFO ] 2022-07-26 09:48:14.497 [pool-2-thread-2] ImportOpenStreetMap - Importing liechtenstein-latest.osm.pbf into jdbc:postgresql://localhost:5432/baremaps?&user=baremaps&password=baremaps
+[INFO ] 2022-07-26 09:48:14.504 [pool-2-thread-2] HikariDataSource - HikariPool-1 - Starting...
+[INFO ] 2022-07-26 09:48:14.669 [pool-2-thread-2] HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@13d835e3
+[INFO ] 2022-07-26 09:48:14.671 [pool-2-thread-2] HikariDataSource - HikariPool-1 - Start completed.
+[INFO ] 2022-07-26 09:48:19.172 [pool-2-thread-2] ImportOpenStreetMap - Finished importing liechtenstein-latest.osm.pbf into jdbc:postgresql://localhost:5432/baremaps?&user=baremaps&password=baremaps
+[INFO ] 2022-07-26 09:48:19.172 [pool-2-thread-2] HikariDataSource - HikariPool-1 - Shutdown initiated...
+[INFO ] 2022-07-26 09:48:19.177 [pool-2-thread-2] HikariDataSource - HikariPool-1 - Shutdown completed.
+[INFO ] 2022-07-26 09:48:19.178 [pool-2-thread-3] ExecuteSqlFile - Executing indexes.sql into jdbc:postgresql://localhost:5432/baremaps?&user=baremaps&password=baremaps
+[INFO ] 2022-07-26 09:48:19.179 [pool-2-thread-3] HikariDataSource - HikariPool-2 - Starting...
+[INFO ] 2022-07-26 09:48:19.213 [pool-2-thread-3] HikariPool - HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@25c4ab89
+[INFO ] 2022-07-26 09:48:19.213 [pool-2-thread-3] HikariDataSource - HikariPool-2 - Start completed.
+[INFO ] 2022-07-26 09:48:21.365 [pool-2-thread-3] ExecuteSqlFile - Finished executing indexes.sql into jdbc:postgresql://localhost:5432/baremaps?&user=baremaps&password=baremaps
+[INFO ] 2022-07-26 09:48:21.365 [pool-2-thread-3] HikariDataSource - HikariPool-2 - Shutdown initiated...
+[INFO ] 2022-07-26 09:48:21.367 [pool-2-thread-3] HikariDataSource - HikariPool-2 - Shutdown completed.
+[INFO ] 2022-07-26 09:48:21.368 [main] Workflow - Finished executing workflow workflow.json
+```
+
+### Under the Hood (Optional)
+
+What can we learn from this output?
+First, we notice that Baremaps uses a connection pool to parallelize the import procedure.
+Then it imports the OSM data, populating the tables previously created.
+In our case, the input is a file provided by Geofabrik.
+
+OSM's [conceptual model](https://wiki.openstreetmap.org/wiki/Elements) builds upon the notions of nodes, ways and relations.
+In this normalized data model, a line (or way) is formed by a sequence of points (nodes) referenced by their id.
+In order to save denormalized geometries in PostGIS (e.g. linestring, polygon, multi-polygon, etc.), Baremaps creates a cache for nodes, ways and relations.
+[LMDB](https://symas.com/lmdb/) is used under the hood to achieve great performance.
+
+After the creation of the cache, Baremaps can populate the database with geometries.
+The geometries are stored in three tables named after the OSM conceptual model: `osm_nodes`, `osm_ways`, and `osm_relations`.
+In order to improve performances at query time, Baremaps also creates indexes for the tags and the geometries.
+The following Figure displays the schema of the PostGIS database created by Baremaps.
+
+![PostGIS database](/images/database.png)
+
+## Conclusion
+
+In this tutorial, we learnt how to import OpenStreetMap data in PostGIS.
+
+Now that you have inserted the OSM data into the PostGIS database, you can use follow the [Serve Vector Tiles from PostGIS](/examples/serve-vector-tiles) example to serve 
+your PostGIS data directly as Vector Tiles in a web application with live reload capabilities.

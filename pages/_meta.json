@@ -1,0 +1,14 @@
+{
+  "index": {
+    "type": "page",
+    "title": "Baremaps",
+    "display": "hidden",
+    "theme": {
+      "layout": "raw"
+    }
+  },
+  "documentation": {
+    "title": "Documentation",
+    "type": "page"
+  }
+}

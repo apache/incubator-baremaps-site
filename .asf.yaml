@@ -32,9 +32,7 @@ notifications:
   issues:       commits@baremaps.apache.org
   pullrequests: commits@baremaps.apache.org
 
-jekyll:
-  whoami: main
-  target: asf-site
+jekyll: ~
 
 staging:
   whoami: asf-site
