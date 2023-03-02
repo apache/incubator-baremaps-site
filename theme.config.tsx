@@ -18,6 +18,11 @@ const config: DocsThemeConfig = {
   },
   sidebar: {
     defaultMenuCollapseLevel: 1
+  },
+  useNextSeoProps() {
+    return {
+      titleTemplate: '%s – Apache Baremaps'
+    }
   }
 }
 
