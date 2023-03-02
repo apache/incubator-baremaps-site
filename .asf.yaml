@@ -15,7 +15,7 @@
 #
 
 github:
-  description: Create custom vector tiles from OpenStreetMap and other data sources with Postgis and Java.
+  description: Apache Baremaps is a toolkit and a set of infrastructure components for creating, publishing, and operating online maps. It provides a data pipeline enabling developers to build maps with different data sources with live reload capabilities. It provides other services commonly used in online maps, such as location search and IP to location.
   homepage: https://baremaps.apache.org
   labels:
     - java 
@@ -32,9 +32,7 @@ notifications:
   issues:       commits@baremaps.apache.org
   pullrequests: commits@baremaps.apache.org
 
-jekyll:
-  whoami: main
-  target: asf-site
+jekyll: ~
 
 staging:
   whoami: asf-site
