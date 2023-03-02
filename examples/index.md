@@ -22,6 +22,10 @@ For the creation of custom vector tiles you can follow these guides:
 - The [Contour](/examples/import-contour-into-postgis/) example shows how to produce contour lines from a digital elevation model.
 - The [Extrusion](/examples/extrusion/) example shows how to import OSM data into postgis and use the MVT specification to extrude the vectors into 3d.
 
+For the creation of 3d tiles you can follow this guide:
+
+- The [3d Tiles](/examples/3d-tiles/) example shows how to create 3d tiles from OSM data and serve them to a Cesium web application.
+
 For the creation of an IP to location service follow this guide:
 
 - The [IP to location](/examples/ip-to-location/) example shows how to create and serve an IP to location service in a simple web application.
