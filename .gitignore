@@ -40,3 +40,6 @@ out
 
 # Mac files
 .DS_Store
+
+#Intellij
+.idea
