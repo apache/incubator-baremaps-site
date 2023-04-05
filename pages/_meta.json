@@ -7,6 +7,10 @@
       "layout": "raw"
     }
   },
+  "download": {
+    "title": "Download",
+    "type": "page"
+  },
   "documentation": {
     "title": "Documentation",
     "type": "page"

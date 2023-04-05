@@ -10,9 +10,12 @@ const config: DocsThemeConfig = {
     </>
   ),
   project: {
-    link: 'https://github.com/apache/baremaps',
+    link: 'https://github.com/apache/incubator-baremaps/',
   },
-  docsRepositoryBase: 'https://github.com/apache/incubator-baremaps-site',
+  feedback: {
+    useLink: () => 'https://github.com/apache/incubator-baremaps/issues/new'
+  },
+  docsRepositoryBase: 'https://github.com/apache/incubator-baremaps-site/blob/main/',
   footer: {
     text: 'Copyright © ' + new Date().getFullYear() + ' Apache Software Foundation',
   },
