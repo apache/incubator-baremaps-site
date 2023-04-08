@@ -1,4 +1,4 @@
-# Serving Vector Tiles
+# Serve and Export Vector Tiles
 
 In this tutorial, we’ll learn how to serve precomputed vector tiles using Python and Nginx.
 
