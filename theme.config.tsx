@@ -26,7 +26,12 @@ const config: DocsThemeConfig = {
     return {
       titleTemplate: '%s – Apache Baremaps'
     }
-  }
+  },
+  head: (
+    <>
+      <meta name="ahrefs-site-verification" content="ef8280f8481d5ba95a69da0c39d5a06efcc8b8d55820581438c243e12b613846" />
+    </>
+  ),
 }
 
 export default config
