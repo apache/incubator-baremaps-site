@@ -32,7 +32,7 @@ The workflow executed in the following command contains multiple steps.
 - Iterate over every entry in the registries to extract the IP address ranges and the associated metadata to query the Geocoding index and extract a latitude and a longitude.
 
 ```
-baremaps workflow execute --file examples/geocoding/workflow.json
+baremaps workflow execute --file examples/ip-to-location/workflow.js
 ```
 
 ## Serve the data
@@ -40,10 +40,12 @@ baremaps workflow execute --file examples/geocoding/workflow.json
 The following command will serve the Geonames index over HTTP in a simple web application.
 
 ```
-iploc serve --database iploc.db --port 9000
+baremaps iploc serve --database iploc.db --port 9000
 ```
 
 Go to [http://localhost:9000/](http://localhost:9000/) to see it in action.
+
+![ip-to-location](https://user-images.githubusercontent.com/238747/234003934-e10040e1-0fdc-45e9-95f5-322fb2401c97.png)
 
 ## Conclusion
 
