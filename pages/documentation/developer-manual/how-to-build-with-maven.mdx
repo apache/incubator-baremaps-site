@@ -11,9 +11,9 @@ To start you can run the command `mvn clean package` from the root folder of the
 compilation you should see something similar to the following output in your terminal. 
 
 ```bash
-[INFO] Building zip: /path-to-project/baremaps/baremaps-cli/target/baremaps.zip
+[INFO] Building tar: /path-to-project/baremaps-cli/target/apache-baremaps-0.7.2-SNAPSHOT-incubating-bin.tar.gz
 [INFO] ------------------------------------------------------------------------
-[INFO] Reactor Summary for baremaps 0.7.1-SNAPSHOT:
+[INFO] Reactor Summary for baremaps 0.7.2-SNAPSHOT:
 [INFO] 
 [INFO] baremaps ........................................... SUCCESS [  4.172 s]
 [INFO] baremaps-core ...................................... SUCCESS [ 59.018 s]
@@ -24,13 +24,13 @@ compilation you should see something similar to the following output in your ter
 [INFO] ------------------------------------------------------------------------
 ```
 
-It is important to note the first line in the output above that notes where the location of the `baremaps.zip` file resides.
-Referencing the location of the `baremaps.zip` file, you can run the following to unzip 
+It is important to note the first line in the output above that notes where the location of the `baremaps-cli` binary file resides.
+Referencing the location of the `baremaps-cli` binary file, you can run the following to untar 
 and place Baremaps into your `PATH`.
 
 ```bash
-$ unzip /path-to-project/baremaps/baremaps-cli/target/baremaps.zip
-$ export PATH=$PATH:`pwd`/baremaps/bin
+$ tar -xvzf /path-to-project/baremaps-cli/target/apache-baremaps-0.7.2-SNAPSHOT-incubating-bin.tar.gz
+$ export PATH=$PATH:`pwd`/apache-baremaps-0.7.2-SNAPSHOT-incubating-bin/bin
 ```
 
 Executing the `baremaps` command should now result in an output similar to the following:
