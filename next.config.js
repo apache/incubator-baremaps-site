@@ -8,6 +8,7 @@ module.exports = {
   ...withNextra(),
   images: {
     unoptimized: true
-  }
+  },
+  trailingSlash: true
   //reactStrictMode: true
 };
