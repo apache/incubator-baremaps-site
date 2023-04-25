@@ -36,13 +36,16 @@ $ export PATH=$PATH:`pwd`/apache-baremaps-0.7.2-SNAPSHOT-incubating-bin/bin
 Executing the `baremaps` command should now result in an output similar to the following:
 
 ```
-Usage: baremaps [COMMAND]
+Usage: baremaps [-V] [COMMAND]
 A toolkit for producing vector tiles.
+  -V, --version   Print version info.
 Commands:
-  import  Import OpenStreetMap data in the Postgresql database.
-  update  Update OpenStreetMap data in the Postgresql database.
-  export  Export vector tiles from the Postgresql database.
-  serve   Serve vector tiles from the the Postgresql database.
+  workflow  Manage a workflow.
+  database  Database commands.
+  map       Map commands.
+  geocoder  Geocoder commands (experimental).
+  iploc     IP to location commands (experimental).
+  ogcapi    OGC API server (experimental).
 ```
 
 From here, head into [Installing PostGIS](/documentation/getting-started/installing-postgis/) if you plan to work with vector tiles.
