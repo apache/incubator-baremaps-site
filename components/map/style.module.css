@@ -12,4 +12,7 @@
     border-radius: .75rem;
     width: 100%;
     height: 100%;
+    overflow: hidden;
+    /* this fixes the overflow:hidden for canvas - corresponds to 1 black pixel */
+    -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
 }
