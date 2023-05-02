@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Nextra docs template",
   "scripts": {
+    "format": "prettier --write . --config ./.prettierrc",
     "dev": "next dev",
     "start": "next start",
     "build": "next build && next export",
@@ -34,6 +35,7 @@
   },
   "devDependencies": {
     "@types/node": "18.11.10",
+    "prettier": "^2.8.8",
     "serve": "^14.2.0",
     "typescript": "^4.9.3"
   }

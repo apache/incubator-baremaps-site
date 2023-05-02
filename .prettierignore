@@ -1,0 +1,12 @@
+# Generated files
+node_modules
+.next
+public
+out
+
+# Project files
+src/lib/maplibre/dist
+
+# Lock files
+pnpm-lock.yaml
+package-lock.json
