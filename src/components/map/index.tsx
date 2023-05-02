@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import maplibregl from 'maplibre-gl';
-import MaplibreInspect from './maplibre-gl-inspect.js';
-import MaplibreTileBoundaries from './maplibre-gl-tile-boundaries.js';
+import MaplibreInspect from '@/lib/maplibre/dist/maplibre-gl-inspect/maplibre-gl-inspect';
+import MaplibreTileBoundaries from '@/lib/maplibre/dist/maplibre-gl-tile-boundaries/maplibre-gl-tile-boundaries';
 
 import styles from './style.module.css'
 
