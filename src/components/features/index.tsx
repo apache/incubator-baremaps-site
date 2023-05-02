@@ -1,9 +1,9 @@
-import type { ReactNode } from 'react'
-import Link from 'next/link'
-import cn from 'clsx'
-import { motion } from 'framer-motion'
+import type { ReactNode } from 'react';
+import Link from 'next/link';
+import cn from 'clsx';
+import { motion } from 'framer-motion';
 
-import styles from './style.module.css'
+import styles from './style.module.css';
 
 export function Feature({
   medium,
@@ -52,9 +52,9 @@ export function Feature({
         </Link>
       ) : null}
     </motion.div>
-  )
+  );
 }
 
 export function Features({ children }: { children: ReactNode }) {
-  return <div className={styles.features}>{children}</div>
+  return <div className={styles.features}>{children}</div>;
 }

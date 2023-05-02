@@ -15,7 +15,7 @@ Also, if you are in a hurry, consider skipping the "Under the Hood" sections.
 
 OpenStreetMap (OSM) is a free and editable map of the world.
 It is maintained by a community of passionate volunteers in a way which is similar to Wikipedia.
-Every week, OpenStreetMap publishes a [full dump](https://planet.openstreetmap.org/) of its data in two flavours: a large XML file of about 90GB and a more compact binary file of about 50GB in the  [Protocol Buffer Format](https://developers.google.com/protocol-buffers) (PBF).
+Every week, OpenStreetMap publishes a [full dump](https://planet.openstreetmap.org/) of its data in two flavours: a large XML file of about 90GB and a more compact binary file of about 50GB in the [Protocol Buffer Format](https://developers.google.com/protocol-buffers) (PBF).
 As processing such large files can take several hours, [Geofabrik](http://www.geofabrik.de/data/download.html) regularly publishes smaller extracts of OSM for specific regions.
 In this example we will use a tiny extract of OSM for [Liechtenstein](https://en.wikipedia.org/wiki/Liechtenstein), which is suitable for fast experiments.
 
@@ -75,5 +75,5 @@ The following Figure displays the schema of the PostGIS database created by Bare
 
 In this tutorial, we learnt how to import OpenStreetMap data in PostGIS.
 
-Now that you have inserted the OSM data into the PostGIS database, you can use follow the [Serve Vector Tiles from PostGIS](/documentation/examples/serve-and-export-vector-tiles/) example to serve 
+Now that you have inserted the OSM data into the PostGIS database, you can use follow the [Serve Vector Tiles from PostGIS](/documentation/examples/serve-and-export-vector-tiles/) example to serve
 your PostGIS data directly as Vector Tiles in a web application with live reload capabilities.

@@ -1,10 +1,9 @@
 {
-    "import-osm-into-postgis": "Import OpenStreetMap into PostGIS",
-    "import-naturalearth-into-postgis": "Import Natural Earth data into PostGIS",
-    "serve-and-export-vector-tiles": "Serve and Export Vector Tiles from PostGIS",
-    "import-contour-into-postgis": "Contour Lines in Vector Tiles",
-    "extrusion": "Extrusion of vector tiles from OSM data",
-    "ip-to-location": "Create an IP to location web service",
-    "geocoding": "Create a geocoding web service"
-  }
-  
+  "import-osm-into-postgis": "Import OpenStreetMap into PostGIS",
+  "import-naturalearth-into-postgis": "Import Natural Earth data into PostGIS",
+  "serve-and-export-vector-tiles": "Serve and Export Vector Tiles from PostGIS",
+  "import-contour-into-postgis": "Contour Lines in Vector Tiles",
+  "extrusion": "Extrusion of vector tiles from OSM data",
+  "ip-to-location": "Create an IP to location web service",
+  "geocoding": "Create a geocoding web service"
+}

@@ -1,20 +1,19 @@
-
 # How to Build with Maven
 
 This guide describes the basics of compiling Baremaps from source. In order to run Apache Baremaps, you first need to install Java 17 or a later version.
 [SDKMAN](https://sdkman.io/) provides a convenient Command Line Interface (CLI) to install and upgrade Java. We also suggest you use the most recent version of Maven
-to compile [(at least 3.x.x)](https://maven.apache.org/download.cgi). 
+to compile [(at least 3.x.x)](https://maven.apache.org/download.cgi).
 
 ### Linux or OSX
 
-To start you can run the command `./mvnw clean package -DskipTests` from the root folder of the Baremaps project.  Upon successful
-compilation you should see something similar to the following output in your terminal. 
+To start you can run the command `./mvnw clean package -DskipTests` from the root folder of the Baremaps project. Upon successful
+compilation you should see something similar to the following output in your terminal.
 
 ```bash
 [INFO] Building tar: /path-to-project/baremaps-cli/target/apache-baremaps-0.7.2-SNAPSHOT-incubating-bin.tar.gz
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary for baremaps 0.7.2-SNAPSHOT:
-[INFO] 
+[INFO]
 [INFO] baremaps ........................................... SUCCESS [  4.172 s]
 [INFO] baremaps-core ...................................... SUCCESS [ 59.018 s]
 [INFO] baremaps-benchmark ................................. SUCCESS [  1.775 s]
@@ -25,7 +24,7 @@ compilation you should see something similar to the following output in your ter
 ```
 
 It is important to note the first line in the output above that notes where the location of the `baremaps-cli` binary file resides.
-Referencing the location of the `baremaps-cli` binary file, you can run the following to untar 
+Referencing the location of the `baremaps-cli` binary file, you can run the following to untar
 and place Baremaps into your `PATH`.
 
 ```bash
