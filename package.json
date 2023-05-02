@@ -4,6 +4,7 @@
   "description": "Nextra docs template",
   "scripts": {
     "format": "prettier --write . --config ./.prettierrc",
+    "format:check": "prettier --check . --config ./.prettierrc",
     "dev": "next dev",
     "start": "next start",
     "build": "next build && next export",
