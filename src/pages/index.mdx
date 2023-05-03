@@ -2,51 +2,62 @@
 title: Mapping Infrastructure Made Easy
 ---
 
-import Link from 'next/link'
-import Image from 'next/image'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMap } from '@fortawesome/free-regular-svg-icons'
-import Map from '../components/map'
-import { Features, Feature } from '../components/features'
+import Link from 'next/link';
+import Image from 'next/image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMap } from '@fortawesome/free-regular-svg-icons';
+import Map from '@/components/map';
+import { Features, Feature } from '@/components/features';
 
-import styles from './index.module.css'
+import styles from './index.module.css';
 
 <div className="home-content">
   <div className="content-container">
     <h1 className="headline">Apache Baremaps</h1>
     <h2 className="title">Mapping Infrastructure Made Easy</h2>
-    <p className="subtitle">Apache Baremaps is a toolkit and a set of infrastructure components <br className='sm:block hidden'/> for creating, publishing, and operating online maps.</p>
-    <p className="subtitle">
-      <Link className={styles.cta} href="/documentation">Get started <span>→</span></Link>
-    </p>
+    <div className="subtitle">
+      Apache Baremaps is a toolkit and a set of infrastructure components{' '}
+      <br className="sm:block hidden" /> for creating, publishing, and operating
+      online maps.
+    </div>
+    <div className="subtitle">
+      <Link className={styles.cta} href="/documentation">
+        Get started <span>→</span>
+      </Link>
+    </div>
   </div>
   <div className="features-container">
     <div className="content-container">
       <Features>
-        <Feature index={0} plain large style={{height: 600}}>
+        <Feature index={0} plain large style={{ height: 600 }}>
           <Map />
         </Feature>
         <Feature index={0}>
           <h3>Data Pipeline</h3>
           <div>
-            With Baremaps, you can easily create custom data pipelines to consolidate your spatial datasets in PostGIS. 
-            Baremaps supports several popular formats such as OsmPbf, ShapeFile, GeoPackage, and FlatGeoBuf, allowing you to seamlessly integrate with your existing workflows.
+            With Baremaps, you can easily create custom data pipelines to
+            consolidate your spatial datasets in PostGIS. Baremaps supports
+            several popular formats such as OsmPbf, ShapeFile, GeoPackage, and
+            FlatGeoBuf, allowing you to seamlessly integrate with your existing
+            workflows.
           </div>
         </Feature>
         <Feature index={0}>
           <h3>Vector Tiles</h3>
           <div>
-            Baremaps allows you to easily serve and publish custom vector tiles from PostGIS. 
-            Whether you need to create maps for web or mobile applications, Baremaps makes it simple and efficient. 
-            Additionally, we are continuously working on developing a high-quality base map.
+            Baremaps allows you to easily serve and publish custom vector tiles
+            from PostGIS. Whether you need to create maps for web or mobile
+            applications, Baremaps makes it simple and efficient. Additionally,
+            we are continuously working on developing a high-quality base map.
           </div>
         </Feature>
         <Feature index={0}>
           <h3>Contributing</h3>
           <div>
-            Whether you're an experienced or just getting started, there are many ways to get involved. 
-            We are experimenting with a range of new components, including IP to location, 3D Tiles Next, and geocoding, and would love your help. 
-            Let's create something amazing together!
+            Whether you're an experienced or just getting started, there are
+            many ways to get involved. We are experimenting with a range of new
+            components, including IP to location, 3D Tiles Next, and geocoding,
+            and would love your help. Let's create something amazing together!
           </div>
         </Feature>
       </Features>
@@ -55,62 +66,62 @@ import styles from './index.module.css'
 </div>
 
 <style jsx>{`
-    .content-container {
-      max-width: 90rem;
-      padding-left: max(env(safe-area-inset-left),1.5rem);
-      padding-right: max(env(safe-area-inset-right),1.5rem);
-      margin: 0 auto;
-    }
-    .features-container {
-      margin: 8rem 0 0;
-      padding: 4rem 0;
-      background-color: #f3f4f6;
-      border-bottom: 1px solid #e5e7eb;
-    }
-    .features-container .content-container {
-      margin-top: -8rem;
-    }
-    :global(.dark) .features-container {
-      background-color: #000;
-      border-bottom: 1px solid rgb(38,38,38);
-    }
+  .content-container {
+    max-width: 90rem;
+    padding-left: max(env(safe-area-inset-left), 1.5rem);
+    padding-right: max(env(safe-area-inset-right), 1.5rem);
+    margin: 0 auto;
+  }
+  .features-container {
+    margin: 8rem 0 0;
+    padding: 4rem 0;
+    background-color: #f3f4f6;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .features-container .content-container {
+    margin-top: -8rem;
+  }
+  :global(.dark) .features-container {
+    background-color: #000;
+    border-bottom: 1px solid rgb(38, 38, 38);
+  }
+  .headline {
+    display: block;
+    font-size: 3.125rem;
+    font-size: min(4.375rem, max(8vw, 2.5rem));
+    font-weight: 3;
+    font-feature-settings: initial;
+    letter-spacing: -0.12rem;
+    margin-left: -0.2rem;
+    margin-top: 3.4rem;
+    line-height: 1.1;
+  }
+  .title {
+    display: block;
+    font-size: 3.125rem;
+    font-size: min(4.375rem, max(8vw, 2.5rem));
+    font-weight: 700;
+    font-feature-settings: initial;
+    letter-spacing: -0.12rem;
+    margin-top: 1rem;
+    margin-left: -0.2rem;
+    line-height: 1.1;
+  }
+  .subtitle {
+    margin-top: 1.5rem;
+    font-size: 1.3rem;
+    font-size: min(1.3rem, max(3.5vw, 1.2rem));
+    font-feature-settings: initial;
+    line-height: 1.6;
+  }
+  .nextjs-link {
+    color: currentColor;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  @media screen and (max-width: 1200px) {
     .headline {
-      display: block;
-      font-size: 3.125rem;
-      font-size: min(4.375rem, max(8vw, 2.5rem));
-      font-weight: 3;
-      font-feature-settings: initial;
-      letter-spacing: -.12rem;
-      margin-left: -0.2rem;
-      margin-top: 3.4rem;
-      line-height: 1.1;
+      letter-spacing: -0.08rem;
     }
-    .title {
-      display: block;
-      font-size: 3.125rem;
-      font-size: min(4.375rem, max(8vw, 2.5rem));
-      font-weight: 700;
-      font-feature-settings: initial;
-      letter-spacing: -.12rem;
-      margin-top: 1rem;
-      margin-left: -0.2rem;
-      line-height: 1.1;
-    }
-    .subtitle {
-      margin-top: 1.5rem;
-      font-size: 1.3rem;
-      font-size: min(1.3rem, max(3.5vw, 1.2rem));
-      font-feature-settings: initial;
-      line-height: 1.6;
-    }
-    .nextjs-link {
-      color: currentColor;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    @media screen and (max-width: 1200px) {
-      .headline {
-        letter-spacing: -.08rem;
-      }
-    }
-  `}</style>
+  }
+`}</style>

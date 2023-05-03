@@ -18,18 +18,18 @@ github:
   description: Apache Baremaps is a toolkit and a set of infrastructure components for creating, publishing, and operating online maps.
   homepage: https://baremaps.apache.org
   labels:
-    - java 
-    - vector-tiles 
-    - openstreetmap 
-    - postgresql 
-    - postgis 
-    - mapbox 
-    - spatial-data 
+    - java
+    - vector-tiles
+    - openstreetmap
+    - postgresql
+    - postgis
+    - mapbox
+    - spatial-data
     - web-mapping
-  
+
 notifications:
-  commits:      commits@baremaps.apache.org
-  issues:       commits@baremaps.apache.org
+  commits: commits@baremaps.apache.org
+  issues: commits@baremaps.apache.org
   pullrequests: commits@baremaps.apache.org
 
 jekyll: ~
