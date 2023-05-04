@@ -1,0 +1,8 @@
+.title-container {
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  justify-content: start;
+  gap: 1.5rem;
+  margin-bottom: 0.75rem;
+}
