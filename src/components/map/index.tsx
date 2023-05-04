@@ -29,7 +29,7 @@ export default function Map({
         try {
           const res = await fetch('https://api.ipify.org/?format=json');
           const { ip } = await res.json();
-          const res2 = await fetch(`http://demo.baremaps.com/api/ip/${ip}`);
+          const res2 = await fetch(`https://demo.baremaps.com/api/ip/${ip}`);
           const results = await res2.json();
           if (results.length > 0) {
             longitude = results[0].longitude;
@@ -82,7 +82,7 @@ export default function Map({
 
   return (
     <div className={styles.wrap}>
-      <GeocoderSearch url="http://demo.baremaps.com/api/geocoder" map={map} />
+      <GeocoderSearch url="https://demo.baremaps.com/api/geocoder" map={map} />
       <div ref={mapContainer} className={styles.map} />
     </div>
   );
