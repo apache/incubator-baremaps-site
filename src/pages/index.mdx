@@ -5,11 +5,15 @@ title: Mapping Infrastructure Made Easy
 import Link from 'next/link';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMap } from '@fortawesome/free-regular-svg-icons';
+import {
+  faListCheck,
+  faVectorSquare,
+  faEarthAmericas,
+  faPeopleGroup
+} from '@fortawesome/free-solid-svg-icons';
 import Map from '@/components/map';
 import { Features, Feature } from '@/components/features';
-
-import styles from './index.module.css';
+import { IconTitle } from '@/components/titles/IconTitle';
 
 <div className="home-content">
   <div className="content-container">
@@ -21,7 +25,7 @@ import styles from './index.module.css';
       online maps.
     </div>
     <div className="subtitle">
-      <Link className={styles.cta} href="/documentation">
+      <Link href="/documentation">
         Get started <span>→</span>
       </Link>
     </div>
@@ -33,7 +37,9 @@ import styles from './index.module.css';
           <Map />
         </Feature>
         <Feature index={0}>
-          <h3>Data Pipeline</h3>
+          <IconTitle icon={faListCheck}>
+            <h3>Data Pipeline</h3>
+          </IconTitle>
           <div>
             With Baremaps, you can easily create custom data pipelines to
             consolidate your spatial datasets in PostGIS. Baremaps supports
@@ -43,7 +49,9 @@ import styles from './index.module.css';
           </div>
         </Feature>
         <Feature index={0}>
-          <h3>Vector Tiles</h3>
+          <IconTitle icon={faVectorSquare}>
+            <h3>Vector Tiles</h3>
+          </IconTitle>
           <div>
             Baremaps allows you to easily serve and publish custom vector tiles
             from PostGIS. Whether you need to create maps for web or mobile
@@ -52,7 +60,21 @@ import styles from './index.module.css';
           </div>
         </Feature>
         <Feature index={0}>
-          <h3>Contributing</h3>
+          <IconTitle icon={faEarthAmericas}>
+            <h3>Geocoder</h3>
+          </IconTitle>
+          <div>
+            Baremaps provides a geocoder that allows you to search for places
+            and addresses. The geocoder is based on the GeoNames database and
+            can be easily integrated into your existing applications. We are
+            working on adding more features and improving the quality of the
+            results.
+          </div>
+        </Feature>
+        <Feature index={0}>
+          <IconTitle icon={faPeopleGroup}>
+            <h3>Contributing</h3>
+          </IconTitle>
           <div>
             Whether you're an experienced or just getting started, there are
             many ways to get involved. We are experimenting with a range of new
