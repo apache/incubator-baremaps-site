@@ -27,10 +27,8 @@ export default function Map({
     const initMap = async () => {
       if (ipToLoc) {
         try {
-          const res = await fetch('https://api.ipify.org/?format=json');
-          const { ip } = await res.json();
-          const res2 = await fetch(`https://demo.baremaps.com/api/ip/${ip}`);
-          const results = await res2.json();
+          const response = await fetch(`https://demo.baremaps.com/api/iploc`);
+          const results = await response.json();
           if (results.length > 0) {
             longitude = results[0].longitude;
             latitude = results[0].latitude;
@@ -82,7 +80,7 @@ export default function Map({
 
   return (
     <div className={styles.wrap}>
-      <GeocoderSearch url="https://demo.baremaps.com/api/geocoder" map={map} />
+      <GeocoderSearch url="http://localhost:9000/api/geocoder" map={map} />
       <div ref={mapContainer} className={styles.map} />
     </div>
   );
