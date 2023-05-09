@@ -80,7 +80,7 @@ export default function Map({
 
   return (
     <div className={styles.wrap}>
-      <GeocoderSearch url="http://localhost:9000/api/geocoder" map={map} />
+      <GeocoderSearch url="https://demo.baremaps.com/api/geocoder" map={map} />
       <div ref={mapContainer} className={styles.map} />
     </div>
   );
