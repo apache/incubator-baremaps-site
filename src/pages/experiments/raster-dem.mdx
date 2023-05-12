@@ -1,0 +1,52 @@
+import Map, { getDefaultControls } from '@/components/map';
+import maplibregl from 'maplibre-gl';
+
+# Raster DEM
+
+The following raster DEM dataset is from [AWS Terrain Tiles](https://registry.opendata.aws/terrain-tiles/).
+
+<div style={{ marginTop: 20, height: 550 }}>
+  <Map
+    zoom={4}
+    mapOptions={{
+      maxZoom: 14
+    }}
+    mapStyle={{
+      version: 8,
+      sources: {
+        rasterSource: {
+          type: 'raster',
+          tiles: [
+            'https://s3.amazonaws.com/elevation-tiles-prod/geotiff/{z}/{x}/{y}.tif'
+          ],
+          tileSize: 512,
+          maxzoom: 14,
+          minzoom: 0
+        },
+        terrainSource: {
+          type: 'raster-dem',
+          tiles: [
+            'https://s3.amazonaws.com/elevation-tiles-prod/geotiff/{z}/{x}/{y}.tif'
+          ],
+          tileSize: 512,
+          maxzoom: 14,
+          minzoom: 0
+        }
+      },
+      layers: [
+        {
+          id: 'raster-layer',
+          type: 'raster',
+          source: 'rasterSource'
+        }
+      ]
+    }}
+    getControls={() => [
+      ...getDefaultControls(),
+      new maplibregl.TerrainControl({
+        source: 'terrainSource',
+        exaggeration: 0.05
+      })
+    ]}
+  />
+</div>

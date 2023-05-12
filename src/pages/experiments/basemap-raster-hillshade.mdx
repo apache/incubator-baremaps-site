@@ -1,0 +1,53 @@
+import Map, { getDefaultControls } from '@/components/map';
+import maplibregl from 'maplibre-gl';
+
+# Basemap Raster Hillshade
+
+The following example injects a terrain source and a hillshade layer into the basemap style.
+
+<div style={{ marginTop: 20, height: 550 }}>
+  <Map
+    zoom={4}
+    mapOptions={{
+      maxZoom: 14
+    }}
+    getMapStyle={async () => {
+      const res = await fetch('https://demo.baremaps.com/style.json');
+      const style = await res.json();
+      // Inject the terrain source and hillshade layer
+      style.sources['terrainSource'] = {
+        type: 'raster-dem',
+        tiles: [
+          'https://s3.amazonaws.com/elevation-tiles-prod/geotiff/{z}/{x}/{y}.tif'
+        ],
+        tileSize: 512,
+        maxzoom: 14,
+        minzoom: 0
+      };
+      style.layers.splice(15, 0, {
+        id: 'hills',
+        type: 'hillshade',
+        source: 'terrainSource',
+        layout: {
+          visibility: 'visible'
+        },
+        // We adjust the hillshade layer to overlay the vector layers
+        paint: {
+          'hillshade-accent-color': 'rgba(0,0,0,0)',
+          'hillshade-highlight-color': 'rgba(255,255,255,0.1)',
+          'hillshade-illumination-anchor': 'viewport',
+          'hillshade-illumination-direction': 45,
+          'hillshade-shadow-color': 'rgba(0,0,0,0.05)'
+        }
+      });
+      return style;
+    }}
+    getControls={() => [
+      ...getDefaultControls(),
+      new maplibregl.TerrainControl({
+        source: 'terrainSource',
+        exaggeration: 0.05
+      })
+    ]}
+  />
+</div>

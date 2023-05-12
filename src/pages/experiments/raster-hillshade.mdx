@@ -1,0 +1,71 @@
+import Map, { getDefaultControls } from '@/components/map';
+import maplibregl from 'maplibre-gl';
+
+# Raster Hillshade
+
+This example shows the use of the `hillshade` layer type in `maplibre-gl` to render a hillshade layer on top of a raster DEM layer.
+
+<div style={{ marginTop: 20, height: 550 }}>
+  <Map
+    zoom={4}
+    mapOptions={{
+      maxZoom: 14
+    }}
+    mapStyle={{
+      version: 8,
+      sources: {
+        rasterSource: {
+          type: 'raster',
+          tiles: [
+            'https://s3.amazonaws.com/elevation-tiles-prod/geotiff/{z}/{x}/{y}.tif'
+          ],
+          tileSize: 512,
+          maxzoom: 14,
+          minzoom: 0
+        },
+        terrainSource: {
+          type: 'raster-dem',
+          tiles: [
+            'https://s3.amazonaws.com/elevation-tiles-prod/geotiff/{z}/{x}/{y}.tif'
+          ],
+          tileSize: 512,
+          maxzoom: 14,
+          minzoom: 0
+        }
+      },
+      layers: [
+        {
+          id: 'hills',
+          type: 'hillshade',
+          source: 'terrainSource',
+          layout: {
+            visibility: 'visible'
+          },
+          paint: {
+            'hillshade-accent-color': '#0ac1ff',
+            'hillshade-highlight-color': '#ffffff',
+            'hillshade-illumination-anchor': 'map',
+            'hillshade-illumination-direction': 45,
+            'hillshade-shadow-color': '#000000'
+          }
+        },
+        {
+          id: 'raster-layer',
+          type: 'raster',
+          source: 'rasterSource',
+          // Reduce opacity of raster layer to increase visibility of hillshade layer
+          paint: {
+            'raster-opacity': 0.6
+          }
+        }
+      ]
+    }}
+    getControls={() => [
+      ...getDefaultControls(),
+      new maplibregl.TerrainControl({
+        source: 'terrainSource',
+        exaggeration: 0.05
+      })
+    ]}
+  />
+</div>
