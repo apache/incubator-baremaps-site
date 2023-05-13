@@ -25,7 +25,8 @@ A workflow is a directed acyclic graph of steps executed by Baremaps.
 To download and import the sample OSM data in Postgres, execute the following [workflow](https://raw.githubusercontent.com/apache/incubator-baremaps/main/examples/openstreetmap/workflow.json).
 
 ```
-baremaps workflow execute --file examples/openstreetmap/workflow.json
+cd examples/openstreetmap
+baremaps workflow execute --file workflow.json
 ```
 
 Depending on the size of the OpenStreetMap file, the execution of this command may take some time.
