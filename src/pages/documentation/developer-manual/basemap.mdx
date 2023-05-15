@@ -13,3 +13,15 @@ import Map from '@/components/map';
 <div style={{ marginTop: 20, height: 450 }}>
   <Map />
 </div>
+
+## Build the basemap
+
+In order to build the basemap locally, move to the `/basemap` directory and run the following workflow:
+
+```bash
+baremaps workflow execute --file=workflow.js
+```
+
+> Note: If you are using Docker, you need to increase the storage allocated to Docker to at least 20GB.
+
+Depending on your machine and internet connection, the process can take up to 30 minutes.
