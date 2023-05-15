@@ -14,5 +14,10 @@
   "documentation": {
     "title": "Documentation",
     "type": "page"
+  },
+  "experiments": {
+    "title": "Experiments",
+    "type": "page",
+    "display": "hidden"
   }
 }
