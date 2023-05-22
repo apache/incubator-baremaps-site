@@ -1,0 +1,62 @@
+---
+layout: default
+title: Building gdal-java on Mac OS X
+---
+
+# Building gdal on Mac OS X
+
+The following procedure has been adapted form the [GDAL CI](https://github.com/OSGeo/gdal/blob/master/ci/travis/osx/before_install.sh).
+
+```bash
+set -e
+
+xcode-select --installs
+
+brew install cmake
+brew install proj
+brew install boost
+brew install swig
+brew install sqlite
+brew install thrift
+brew install --cask miniconda
+
+git clone git@github.com:OSGeo/gdal.git
+git checkout v3.6.4
+
+conda update -n base -c defaults conda
+conda install -y compilers automake pkgconfig cmake
+conda config --set channel_priority strict
+conda install --yes --quiet proj=7.1.1=h45baca5_3 python=3.8 swig -y
+conda install --yes --quiet libgdal=3.1.4=hd7bf8dc_0  --only-deps -y
+
+CONDA_PREFIX=/usr/local/miniconda/envs/test
+find ${CONDA_PREFIX}/lib -name '*.la' -delete
+
+mkdir build
+cd build
+
+CFLAGS="-Wextra -Werror -Wunused-variable" CXXFLAGS="-Wextra -Werror -Wunused-variable" cmake .. \
+        -DCMAKE_INSTALL_PREFIX=$HOME/install-gdal \
+        -DCMAKE_PREFIX_PATH=${CONDA_PREFIX} \
+        -DGDAL_USE_GEOTIFF_INTERNAL=ON \
+        -DGDAL_USE_PNG_INTERNAL=ON \
+        -DGDAL_USE_POSTGRESQL=OFF \
+        -DGDAL_USE_WEBP=OFF \
+        -DGDAL_USE_ARROW=OFF \
+        -DGDAL_USE_PARQUET=OFF \
+        -DBUILD_CSHARP_BINDINGS=OFF
+make -j3
+make install
+```
+
+After this, the library can be found in `~/install-gdal/share/java/libgdalalljni.dylib`.
+
+When starting a java application, the library can be loaded with the following command:
+
+```bash
+java -Djava.library.path=~/install-gdal/share/java -jar myapp.jar
+```
+
+https://github.com/adoptium/temurin-build/issues/1671
+https://stackoverflow.com/questions/52911791/hardened-runtime-for-java-and-mojave
+https://stackoverflow.com/questions/52905940/how-to-codesign-and-enable-the-hardened-runtime-for-a-3rd-party-cli-on-xcode

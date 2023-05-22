@@ -11,7 +11,8 @@ buildings can be extruded with Maplibre. First, start by downloading the OSM dat
 To import London data in the database.
 
 ```
-baremaps workflow execute --file examples/extrusion/workflow.json
+cd examples/extrusion
+baremaps workflow execute --file workflow.json
 ```
 
 In the [tileset.json](https://raw.githubusercontent.com/apache/incubator-baremaps/main/examples/extrusion/tileset.json)
@@ -63,7 +64,6 @@ for a 100MB tile cache.
 
 ```shell
 baremaps map dev \
-  --database 'jdbc:postgresql://localhost:5432/baremaps?user=baremaps&password=baremaps' \
   --tileset 'tileset.json' \
   --style 'style.json'
 ```
