@@ -21,8 +21,20 @@ const config: DocsThemeConfig = {
   docsRepositoryBase:
     'https://github.com/apache/incubator-baremaps-site/blob/main/',
   footer: {
-    text:
-      'Copyright © ' + new Date().getFullYear() + ' Apache Software Foundation'
+    text: (
+      <span>
+        Copyright © {new Date().getFullYear()} Apache Software Foundation,
+        Licensed under the{' '}
+        <a
+          href="https://www.apache.org/licenses/LICENSE-2.0"
+          target="_blank"
+          style={{ textDecoration: 'underline' }}
+        >
+          Apache License, Version 2.0
+        </a>
+        .
+      </span>
+    )
   },
   sidebar: {
     defaultMenuCollapseLevel: 1
