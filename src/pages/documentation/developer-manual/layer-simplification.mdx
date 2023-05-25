@@ -1,0 +1,107 @@
+# Layer Simplification
+
+In order to optimize the size of tiles at each zoom level, simplifications are made onto the vector layers. It is usually setup in two files:
+
+- `prepare.sql` contains the SQL queries to simplify the data
+- `simplify.sql` contains the SQL queries for creating the materialized views for each zoom level
+
+## Example: Landuse
+
+`st_buffer` is used to simplify the geometries. The different buffer sizes are defined in the `prepare.sql` file.
+
+The following example shows the queries to simplify the landuse layer for the zoom level 7:
+
+### 1. Create the positive buffer
+
+```sql
+CREATE MATERIALIZED VIEW osm_landuse_l_filtered AS
+SELECT
+    id,
+    tags -> 'landuse' as landuse,
+    st_buffer(st_simplifypreservetopology(geom, 78270 / power(2, 6)), 78270 / power(2, 7), 'join=mitre') AS geom
+FROM osm_landuse
+WHERE st_area(st_envelope(geom)) > 5 * power(78270 / power(2, 7), 2);
+```
+
+There are two main parameters to adjust:
+
+- `st_simplifypreservetopology` tolerance.
+
+  > The tolerance is ajusted to one zoom level below the target zoom level. This is to avoid having too many geometries at the target zoom level and allows to better merge them together.
+
+- `st_area` condition.
+
+  > The condition is used to filter out geometries that are too small. Lowering the value will increase the number of geometries and more will be merged together. Increasing the value will decrease the number of geometries and make the layer less "dense".
+
+### 2. Group the geometries
+
+```sql
+CREATE MATERIALIZED VIEW osm_landuse_l_grouped AS
+SELECT
+    landuse,
+    cluster,
+    st_collect(geom) AS geom
+FROM osm_landuse_l_clustered
+GROUP BY landuse, cluster;
+```
+
+The geometries are grouped by landuse and cluster.
+
+### 3. Create the negative buffer
+
+```sql
+CREATE MATERIALIZED VIEW osm_landuse_l_buffered AS
+SELECT
+    landuse,
+    st_buffer(geom, 0.5 * -78270 / power(2, 7), 'join=mitre') AS geom
+FROM osm_landuse_l_grouped;
+```
+
+Here the buffer is created with a negative value to merge the geometries together.
+
+- `st_buffer` buffer size.
+
+  > The negative value is used to merge the geometries together. A smaller factor will merge more geometries together and vice versa. However, the greater the difference between the positive and negative buffer, the more likely it is to have artifacts.
+
+### 4. Explode the geometries
+
+```sql
+CREATE MATERIALIZED VIEW osm_landuse_l_exploded AS
+SELECT
+    landuse,
+    (st_dump(geom)).geom AS geom
+FROM osm_landuse_l_buffered;
+```
+
+The geometries are exploded to be able to merge them with the positive buffer.
+
+### 5. Build the final layer
+
+```sql
+CREATE MATERIALIZED VIEW osm_landuse_l AS
+SELECT
+    row_number() OVER () AS id,
+    jsonb_build_object('landuse', landuse) AS tags,
+    geom AS geom
+FROM osm_landuse_l_buffered;
+```
+
+The final layer is created by reconstructing the geometries and adding the landuse tag.
+
+### 6. Use the layer
+
+We now use the `osm_landuse_l` layer for the zoom level 7 in `simplify.sql`. Note that we apply further simplifications to the layer to reduce the size of the tiles.
+
+```sql
+CREATE MATERIALIZED VIEW osm_landuse_z7 AS
+SELECT
+    id,
+    tags,
+    st_simplifypreservetopology(geom, 78270 / power(2, 7)) AS geom
+FROM osm_landuse_l
+WHERE st_area(st_envelope(geom)) > 150 * power(78270 / power(2, 7), 2);
+```
+
+- `st_area` condition.
+
+  > The condition is used again to filter out geometries that are too small from the merged geometries (`osm_landuse_l`). The factor can be adjusted to increase or decrease the filtering.
