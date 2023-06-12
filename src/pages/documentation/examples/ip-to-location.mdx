@@ -9,40 +9,29 @@ In this tutorial, we demonstrate how to create an IP to location index and then 
 
 ## Dataset
 
-The data used to create an IP to location index is publicly available from the 5 [Regional Internet Registries (RIRs)](https://whatismyipaddress.com/rir)
+The data used to create an IP to location index is publicly available from the [Internet routing registries (IRRs)](https://www.irr.net/docs/list.html) which includes the [Regional Internet Registries (RIRs)](https://en.wikipedia.org/wiki/Regional_Internet_registry)
 
-Here is the list of the 5 RIRs.
-
-- [ARIN](https://www.arin.net/)
-- [LACNIC](https://www.lacnic.net/)
-- [AFRINIC](https://afrinic.net/)
-- [RIPE NCC](https://www.ripe.net/)
-- [APNIC](https://www.apnic.net/)
-
-These Regional Internet Registries contain records that link IP address ranges to organisations along with some metadata.
-It is not always possible to extract meaningful data from these registries because they are not normalised.
+The data are formatted following [RPSL](https://www.irr.net/docs/rpsl.html) specifications and contain records that link IP address ranges to organisations along with some metadata.
 
 ## Generate the index
-
-The workflow executed in the following command contains multiple steps.
-
-- Download and decompress the data from the RIRs
-- Download and create a Geocoding index (see the [Geocoding](/documentation/examples/geocoding/) example)
-- Iterate over every entry in the registries to extract the IP address ranges and the associated metadata to query the Geocoding index and extract a latitude and a longitude.
 
 ```
 baremaps workflow execute --file examples/ip-to-location/workflow.js
 ```
 
-## Serve the data
+The workflow executed in the above command does the following:
 
-The following command will serve the Geonames index over HTTP in a simple web application.
+- Download and decompress the data from the IRRs
+- Download and create a Geocoding index (see the [Geocoding](/documentation/examples/geocoding/) example)
+- Iterate over every entry in the registries to extract the IP address ranges and the associated metadata to query the Geocoding index and extract a latitude and a longitude.
+
+## Serve the data
 
 ```
 baremaps iploc serve --database iploc.db --port 9000
 ```
 
-Go to [http://localhost:9000/](http://localhost:9000/) to see it in action.
+A simple web application serves the Geonames index. Go to [http://localhost:9000/](http://localhost:9000/) to see it in action.
 
 ![ip-to-location](https://user-images.githubusercontent.com/238747/234003934-e10040e1-0fdc-45e9-95f5-322fb2401c97.png)
 
