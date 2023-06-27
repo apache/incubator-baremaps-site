@@ -15,6 +15,21 @@
     "title": "Documentation",
     "type": "page"
   },
+  "community": {
+    "title": "Community",
+    "type": "menu",
+    "items": {
+      "mailing-lists": {
+        "title": "Mailing Lists",
+        "href": "/community/mailing-lists"
+      },
+      "contact": {
+        "title": "Contribute to Baremaps",
+        "href": "https://github.com/apache/incubator-baremaps/blob/main/CONTRIBUTING.md",
+        "newWindow": true
+      }
+    }
+  },
   "experiments": {
     "title": "Experiments",
     "type": "page",
