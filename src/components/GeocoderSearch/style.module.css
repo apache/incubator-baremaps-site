@@ -6,7 +6,7 @@
 /* Responsive width for small screens */
 @media screen and (max-width: 768px) {
   .ctrl-container {
-    width: 85%;
+    width: 70%;
   }
 }
 
