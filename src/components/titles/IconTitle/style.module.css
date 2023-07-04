@@ -5,3 +5,8 @@
   gap: 1.5rem;
   margin-bottom: 0.75rem;
 }
+
+.title-container h2,
+.title-container h3 {
+  white-space: nowrap;
+}
