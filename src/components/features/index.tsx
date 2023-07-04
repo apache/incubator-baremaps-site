@@ -8,6 +8,9 @@ import styles from './style.module.css';
 export function Feature({
   medium,
   large,
+  full,
+  square,
+  squareLarge,
   plain,
   centered,
   children,
@@ -27,6 +30,9 @@ export function Feature({
         styles.feature,
         medium && styles.medium,
         large && styles.large,
+        full && styles.full,
+        square && styles.square,
+        squareLarge && styles['square-large'],
         plain && styles.plain,
         centered && styles.centered,
         lightOnly && styles['light-only'],
@@ -36,7 +42,7 @@ export function Feature({
     >
       {children}
       {href ? (
-        <Link className={styles.link} href={href} target="_blank">
+        <Link className={styles.link} href={href}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="1.5em"
