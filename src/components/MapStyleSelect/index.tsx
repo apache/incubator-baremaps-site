@@ -25,7 +25,9 @@ export const MapStyleSelect: React.FC<MapStyleSelectProps> = ({
         <select
           className={styles['style-select']}
           onChange={e => {
-            const style = mapStyles.find(style => style.name === e.target.value);
+            const style = mapStyles.find(
+              style => style.name === e.target.value
+            );
             if (style) {
               map.setStyle(style.styleUrl);
             }
