@@ -1,10 +1,13 @@
 import React, { useRef, useEffect, useState } from 'react';
+import cn from 'clsx';
 import maplibregl from 'maplibre-gl';
 import MaplibreInspect from '@/lib/maplibre/dist/maplibre-gl-inspect/maplibre-gl-inspect';
 import MaplibreTileBoundaries from '@/lib/maplibre/dist/maplibre-gl-tile-boundaries/maplibre-gl-tile-boundaries';
 
 import styles from './style.module.css';
 import { GeocoderSearch } from '../GeocoderSearch';
+import { STYLES } from './mapStyles';
+import { MapStyleSelect } from '../MapStyleSelect';
 
 interface MapProps {
   longitude?: number;
@@ -25,6 +28,10 @@ interface MapProps {
   getControls?: () => maplibregl.IControl[];
   geocoder?: boolean;
   ipToLoc?: boolean;
+  styleSelect?: boolean;
+  /** Map CSS styles */
+  rounded?: boolean;
+  style?: React.CSSProperties;
 }
 
 export const getDefaultControls = (): maplibregl.IControl[] => [
@@ -55,7 +62,10 @@ export default function Map({
   mapOptions = {} as maplibregl.MapOptions,
   getControls = getDefaultControls,
   geocoder = true,
-  ipToLoc = true
+  ipToLoc = true,
+  styleSelect = false,
+  rounded = true,
+  style = {}
 }: MapProps) {
   const mapContainer = useRef(null);
   const [map, setMap] = useState(null);
@@ -97,17 +107,23 @@ export default function Map({
 
       setMap(newMap);
     };
-    initMap();
+    if (!map) {
+      initMap();
+    }
   }, []);
 
   return (
-    <div className={styles.wrap}>
+    <div
+      className={cn(styles.wrap, rounded ? styles.rounded : '')}
+      style={style}
+    >
       {geocoder && (
         <GeocoderSearch
           url="https://demo.baremaps.com/api/geocoder"
           map={map}
         />
       )}
+      {styleSelect && <MapStyleSelect map={map} mapStyles={STYLES} />}
       <div ref={mapContainer} className={styles.map} />
     </div>
   );
