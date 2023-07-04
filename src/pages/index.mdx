@@ -9,11 +9,28 @@ import {
   faListCheck,
   faVectorSquare,
   faEarthAmericas,
-  faPeopleGroup
+  faPeopleGroup,
+  faFillDrip
 } from '@fortawesome/free-solid-svg-icons';
 import Map from '@/components/map';
 import { Features, Feature } from '@/components/features';
 import { IconTitle } from '@/components/titles/IconTitle';
+import { Copyright } from '@/components/Copyright';
+
+import styles from './index.module.css';
+
+export function OSMCopyright() {
+  return (
+    <Copyright
+      copyrights={[
+        {
+          name: 'OpenStreetMap',
+          url: 'https://www.openstreetmap.org/'
+        }
+      ]}
+    />
+  );
+}
 
 <div className="home-content">
   <div className="content-container">
@@ -25,7 +42,7 @@ import { IconTitle } from '@/components/titles/IconTitle';
       online maps.
     </div>
     <div className="subtitle">
-      <Link href="/documentation">
+      <Link href="/documentation" className={styles.cta}>
         Get started <span>→</span>
       </Link>
     </div>
@@ -33,10 +50,32 @@ import { IconTitle } from '@/components/titles/IconTitle';
   <div className="features-container">
     <div className="content-container">
       <Features>
-        <Feature index={0} plain large style={{ height: 600 }}>
-          <Map styleSelect />
+        <Feature index={0} centered>
+          <IconTitle icon={faVectorSquare}>
+            <h3>Vector Tiles</h3>
+          </IconTitle>
+          <div>
+            Baremaps allows you to easily serve and publish custom vector tiles
+            from PostGIS. Whether you need to create maps for web or mobile
+            applications, Baremaps makes it simple and efficient. Additionally,
+            we are continuously working on developing a high-quality base map.
+          </div>
         </Feature>
-        <Feature index={0}>
+        <Feature index={1} squareLarge>
+          <Link href="/map" className={styles['demo-link']}>
+            <h3>Explore Map ↗</h3>
+            <p>Click to view the map</p>
+          </Link>
+          <OSMCopyright />
+          <Image
+            src="/images/map_eu.png"
+            alt="Baremaps Map"
+            loading="eager"
+            layout="fill"
+            objectFit="cover"
+          />
+        </Feature>
+        <Feature index={2} centered>
           <IconTitle icon={faListCheck}>
             <h3>Data Pipeline</h3>
           </IconTitle>
@@ -48,18 +87,28 @@ import { IconTitle } from '@/components/titles/IconTitle';
             workflows.
           </div>
         </Feature>
-        <Feature index={0}>
-          <IconTitle icon={faVectorSquare}>
-            <h3>Vector Tiles</h3>
+        <Feature index={3} large style={{ height: 450 }} href="/map">
+          <OSMCopyright />
+          <Image
+            src="/images/map_styles.png"
+            alt="Baremaps Map Styles"
+            loading="eager"
+            layout="fill"
+            objectFit="cover"
+          />
+        </Feature>
+        <Feature index={4} centered>
+          <IconTitle icon={faFillDrip}>
+            <h3>Themes</h3>
           </IconTitle>
           <div>
-            Baremaps allows you to easily serve and publish custom vector tiles
-            from PostGIS. Whether you need to create maps for web or mobile
-            applications, Baremaps makes it simple and efficient. Additionally,
-            we are continuously working on developing a high-quality base map.
+            Baremaps provides a set of themes that can be used to style your
+            maps. The themes are customizable and can be easily integrated into
+            your existing applications. With hot reloading, you can quickly
+            iterate on your design and see the results in real-time.
           </div>
         </Feature>
-        <Feature index={0}>
+        <Feature index={5} centered>
           <IconTitle icon={faEarthAmericas}>
             <h3>Geocoder</h3>
           </IconTitle>
@@ -71,7 +120,28 @@ import { IconTitle } from '@/components/titles/IconTitle';
             results.
           </div>
         </Feature>
-        <Feature index={0}>
+        <Feature index={6} large style={{ height: 450 }} href="/map">
+          <OSMCopyright />
+          <Image
+            src="/images/geocoder.gif"
+            alt="Baremaps Geocoder Demo"
+            loading="eager"
+            layout="fill"
+            objectFit="cover"
+            objectPosition="0% 0%"
+          />
+        </Feature>
+        <Feature index={7} large style={{ height: 450 }} href="/map">
+          <OSMCopyright />
+          <Image
+            src="/images/map_vector_view.png"
+            alt="Baremaps Map Vector View"
+            loading="eager"
+            layout="fill"
+            objectFit="cover"
+          />
+        </Feature>
+        <Feature index={8} centered>
           <IconTitle icon={faPeopleGroup}>
             <h3>Contributing</h3>
           </IconTitle>
