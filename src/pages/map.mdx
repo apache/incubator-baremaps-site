@@ -1,0 +1,15 @@
+---
+title: Apache Baremaps
+---
+
+import Map from '@/components/map';
+
+<div className="container">
+  <Map mapOptions={{ hash: true }} styleSelect rounded={false} />
+</div>
+
+<style jsx>{`
+  .container {
+    height: calc(100vh - 64px); /* 64px is the height of the navbar */
+  }
+`}</style>

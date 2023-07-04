@@ -7,6 +7,15 @@
       "layout": "raw"
     }
   },
+  "map": {
+    "type": "page",
+    "title": "Map",
+    "display": "hidden",
+    "theme": {
+      "layout": "raw",
+      "footer": false
+    }
+  },
   "download": {
     "title": "Download",
     "type": "page"
