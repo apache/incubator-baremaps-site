@@ -1,0 +1,16 @@
+.copyright {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  margin: 0.5rem;
+  padding: 0.2rem 0.4rem;
+  border-radius: 9999px;
+  background-color: white;
+  font-size: 0.75rem;
+  color: black;
+}
+
+.copyright a:hover {
+  text-decoration: underline;
+}
