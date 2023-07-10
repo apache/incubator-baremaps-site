@@ -3,7 +3,13 @@
   display: table;
 }
 
+.maplibregl-inspect_feature {
+  padding: 0 0.75rem;
+}
+
 .maplibregl-inspect_feature:not(:last-child) {
+  padding-bottom: 0.25rem;
+  margin-bottom: 0.25rem;
   border-bottom: 1px solid #ccc;
 }
 
@@ -22,12 +28,13 @@
 
 .maplibregl-inspect_property-value {
   display: table-cell;
-
+  max-width: 200px;
+  word-break: break-all;
 }
 
 .maplibregl-inspect_property-name {
   display: table-cell;
-  padding-right: 10px;
+  padding-right: 15px;
 }
 
 .maplibregl-ctrl-inspect {
