@@ -44,7 +44,8 @@ export const getDefaultControls = (): maplibregl.IControl[] => [
     showInspectMapPopupOnHover: false,
     popup: new maplibregl.Popup({
       closeButton: true,
-      closeOnClick: true
+      closeOnClick: true,
+      maxWidth: 'none'
     })
   }),
   // Add the tile boundaries control to the map.

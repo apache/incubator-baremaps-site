@@ -1,0 +1,12 @@
+.maplibregl-popup .maplibregl-popup-content {
+  max-height: 50vh;
+  overflow-y: scroll;
+  pointer-events: all;
+  border-radius: 0.5rem;
+  padding: 0.75rem 0;
+}
+
+.maplibregl-popup .maplibregl-popup-close-button {
+  top: 10px;
+  right: 15px;
+}
