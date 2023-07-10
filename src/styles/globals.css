@@ -2,7 +2,7 @@
   max-height: 50vh;
   overflow-y: scroll;
   pointer-events: all;
-  border-radius: 0.5rem;
+  border-radius: 4px;
   padding: 0.75rem 0;
 }
 
