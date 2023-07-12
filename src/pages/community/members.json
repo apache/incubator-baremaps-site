@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Antoine Drabble",
+    "apacheUsername": "adrabble",
+    "githubUsername": "Drabble",
+    "role": "Committer"
+  },
+  {
+    "name": "Bertil Chapuis",
+    "apacheUsername": "bchapuis",
+    "githubUsername": "bchapuis",
+    "role": "Committer"
+  },
+  {
+    "name": "Bertrand Delacretaz",
+    "apacheUsername": "bdelacretaz",
+    "githubUsername": "bdelacretaz",
+    "role": "Champion"
+  },
+  {
+    "name": "Andrea Borghi",
+    "apacheUsername": "danduk82",
+    "githubUsername": "danduk82",
+    "role": "Committer"
+  },
+  {
+    "name": "Martin Desruisseaux",
+    "apacheUsername": "desruisseaux",
+    "githubUsername": "desruisseaux",
+    "role": "Mentor"
+  },
+  {
+    "name": "Julian Hyde",
+    "apacheUsername": "jhyde",
+    "githubUsername": "julianhyde",
+    "role": "Mentor"
+  },
+  {
+    "name": "Josh Fischer",
+    "apacheUsername": "joshfischer",
+    "githubUsername": "joshfischer1108",
+    "role": "Committer"
+  },
+  {
+    "name": "James Smith",
+    "apacheUsername": "jsmith",
+    "githubUsername": "swerky",
+    "role": "Committer"
+  },
+  {
+    "name": "Calvin Kirs",
+    "apacheUsername": "kirs",
+    "githubUsername": "CalvinKirs",
+    "role": "Mentor"
+  },
+  {
+    "name": "Léonard Besseau",
+    "apacheUsername": "lbesseau",
+    "githubUsername": "LeonardBesseau",
+    "role": "Committer"
+  },
+  {
+    "name": "Leonard C.",
+    "apacheUsername": "leonardcs",
+    "githubUsername": "leonardcser",
+    "role": "Committer"
+  },
+  {
+    "name": "George Percivall",
+    "apacheUsername": "percivall",
+    "githubUsername": "percivall",
+    "role": "Mentor"
+  }
+]

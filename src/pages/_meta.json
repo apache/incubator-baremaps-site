@@ -28,6 +28,10 @@
     "title": "Community",
     "type": "menu",
     "items": {
+      "project-members": {
+        "title": "Project Members",
+        "href": "/community/project-members"
+      },
       "mailing-lists": {
         "title": "Mailing Lists",
         "href": "/community/mailing-lists"
