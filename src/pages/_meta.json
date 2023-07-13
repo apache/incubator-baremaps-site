@@ -36,7 +36,12 @@
         "title": "Mailing Lists",
         "href": "/community/mailing-lists"
       },
-      "contact": {
+      "issue-tracker": {
+        "title": "Issue Tracker",
+        "href": "https://github.com/apache/incubator-baremaps/issues",
+        "newWindow": true
+      },
+      "contribute": {
         "title": "Contribute to Baremaps",
         "href": "https://github.com/apache/incubator-baremaps/blob/main/CONTRIBUTING.md",
         "newWindow": true
