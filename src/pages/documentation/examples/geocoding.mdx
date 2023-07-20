@@ -15,15 +15,18 @@ The data we will be using comes from [Geonames](https://www.geonames.org).
 
 The following [workflow](https://raw.githubusercontent.com/apache/incubator-baremaps/main/examples/geocoding/workflow.js) will download the Geonames data, decompress it, and finally build the index.
 
-```
-baremaps workflow execute --file examples/geocoding/workflow.js
+```bash
+# Move to the example directory
+cd examples/geocoding
+# Execute the workflow
+baremaps workflow execute --file workflow.js
 ```
 
 ## Serve the data
 
 The following command will serve the Geonames index over HTTP in a simple web application.
 
-```
+```bash
 baremaps geocoder serve --index geocoder-index --port 9000
 ```
 
