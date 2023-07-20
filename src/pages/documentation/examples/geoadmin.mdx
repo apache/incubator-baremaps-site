@@ -11,7 +11,7 @@ Download an uncompress the archive that contains the GeoTiff.
 If needed, you can now reproject the geotiff in the desired projection before importing it in the database.
 Start by reprojecting the geotiff (EPSG:2056) from LV95 to WebMercator (EPSG:3857)
 
-```
+```bash
 gdalwarp -rc \
   -s_srs epsg:2056 -t_srs epsg:3857 \
   -dstnodata 0 -of GTiff -co tiled=yes \
@@ -24,7 +24,7 @@ Here, the `-nln` argument name the table that contains the data,
 the `-a` argument name the column that contains the elevation,
 the `-i` argument specifies the interval in meters at which contours are generated.
 
-```
+```bash
 gdal_polygonize.py \
   StrassenLaerm_Tag_LV95-3857.tif \
   -f PostgreSQL \
@@ -35,7 +35,7 @@ gdal_polygonize.py \
 The following index can now be created to improve performances.
 When available, a smoothing function such as `ST_ChaikinSmoothing` can be used to improve rendering.
 
-```postgresql
+```sql
 DROP INDEX IF EXISTS geoadmin_traffic_noise_day_gix;
 CREATE INDEX CONCURRENTLY IF NOT EXISTS geoadmin_traffic_noise_day_gix ON geoadmin_traffic_noise_day USING SPGIST(wkb_geometry);
 ```

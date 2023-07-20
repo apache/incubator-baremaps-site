@@ -15,8 +15,9 @@ The data are formatted following [RPSL](https://www.irr.net/docs/rpsl.html) spec
 
 ## Generate the index
 
-```
-baremaps workflow execute --file examples/ip-to-location/workflow.js
+```bash
+cd examples/ip-to-location
+baremaps workflow execute --file workflow.js
 ```
 
 The workflow executed in the above command does the following:
@@ -27,7 +28,7 @@ The workflow executed in the above command does the following:
 
 ## Serve the data
 
-```
+```bash
 baremaps iploc serve --database iploc.db --port 9000
 ```
 
