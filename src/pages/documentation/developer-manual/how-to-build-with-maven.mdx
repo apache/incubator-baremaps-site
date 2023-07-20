@@ -10,9 +10,9 @@ To start you can run the command `./mvnw clean package -DskipTests` from the roo
 compilation you should see something similar to the following output in your terminal.
 
 ```bash
-[INFO] Building tar: /path-to-project/baremaps-cli/target/apache-baremaps-0.7.2-SNAPSHOT-incubating-bin.tar.gz
+[INFO] Building tar: /path-to-project/baremaps-cli/target/apache-baremaps-<version>-SNAPSHOT-incubating-bin.tar.gz
 [INFO] ------------------------------------------------------------------------
-[INFO] Reactor Summary for baremaps 0.7.2-SNAPSHOT:
+[INFO] Reactor Summary for baremaps <version>-SNAPSHOT:
 [INFO]
 [INFO] baremaps ........................................... SUCCESS [  4.172 s]
 [INFO] baremaps-core ...................................... SUCCESS [ 59.018 s]
@@ -28,8 +28,8 @@ Referencing the location of the `baremaps-cli` binary file, you can run the foll
 and place Baremaps into your `PATH`.
 
 ```bash
-tar -xvf ./baremaps-cli/target/apache-baremaps-0.7.2-SNAPSHOT-incubating-bin.tar.gz
-export PATH=$PATH:`pwd`/apache-baremaps-0.7.2-SNAPSHOT-incubating-bin/bin
+tar -xvf ./baremaps-cli/target/apache-baremaps-<version>-SNAPSHOT-incubating-bin.tar.gz -C target/
+export PATH=$PATH:`pwd`/target/apache-baremaps-<version>-SNAPSHOT-incubating-bin/bin
 ```
 
 > **Note:** Make sure to replace the version number in the above commands with the version number of the release you are using.
