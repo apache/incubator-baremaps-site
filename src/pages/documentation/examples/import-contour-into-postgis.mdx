@@ -58,7 +58,7 @@ To improve the performance of the contour lines,
 we can add some indexes to the database.
 Here's an example of how to create a `SPGIST` index:
 
-```postgresql
+```sql
 DROP INDEX IF EXISTS aster_dem_gix;
 CREATE INDEX IF NOT EXISTS aster_dem_gix ON aster_dem USING SPGIST(wkb_geometry);
 ```
@@ -85,7 +85,7 @@ a smoothing function like ST_ChaikinSmoothing. This function takes
 a geometry as input and returns a smoothed version of that geometry.
 Here's an example of how you could use it:
 
-```postgresql
+```sql
 UPDATE aster_dem
 SET wkb_geometry = ST_ChaikinSmoothing(wkb_geometry, 0.1)
 ```

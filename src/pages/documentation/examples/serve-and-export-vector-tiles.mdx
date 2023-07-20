@@ -33,7 +33,7 @@ Each of these files are available in the main repository of Apache Baremaps insi
 First `cd` into one of the example directories that corresponds to the data you inserted inside your PostGIS database.
 Then let's preview and edit the map with the sample configuration files by executing the following command in a terminal.
 
-```
+```bash
 baremaps map dev \
   --tileset 'tileset.json' \
   --style 'style.json'
@@ -79,7 +79,7 @@ Baremaps has been conceived with these lasting trends in mind.
 The following command produces a local directory containing precomputed static tiles.
 These tiles can be served with Apache, Nginx, or Caddy, but also copied in a blob store behind a content delivery network, such as Cloudflare, Stackpath, or Fastly.
 
-```
+```bash
 baremaps map export \
   --tileset 'tileset.json' \
   --repository 'tiles/'
