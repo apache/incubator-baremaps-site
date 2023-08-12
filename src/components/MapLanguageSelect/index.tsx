@@ -8,21 +8,20 @@ interface MapLanguageSelectProps {
 }
 
 export const MapLanguageSelect: React.FC<MapLanguageSelectProps> = ({
-  map,
+  map
 }) => {
-
   let languages = [
-    {name: 'Default', code: 'name'},
-    {name: 'English', code: 'name:en'},
-    {name: 'Spanish', code: 'name:es'},
-    {name: 'French', code: 'name:fr'},
-    {name: 'German', code: 'name:de'},
-    {name: 'Italian', code: 'name:it'},
-    {name: 'Japanese', code: 'name:ja'},
-    {name: 'Korean', code: 'name:ko'},
-    {name: 'Portuguese', code: 'name:pt'},
-    {name: 'Russian', code: 'name:ru'},
-    {name: 'Chinese', code: 'name:zh'},
+    { name: 'Default', code: 'name' },
+    { name: 'English', code: 'name:en' },
+    { name: 'Spanish', code: 'name:es' },
+    { name: 'French', code: 'name:fr' },
+    { name: 'German', code: 'name:de' },
+    { name: 'Italian', code: 'name:it' },
+    { name: 'Japanese', code: 'name:ja' },
+    { name: 'Korean', code: 'name:ko' },
+    { name: 'Portuguese', code: 'name:pt' },
+    { name: 'Russian', code: 'name:ru' },
+    { name: 'Chinese', code: 'name:zh' }
   ];
 
   return (
