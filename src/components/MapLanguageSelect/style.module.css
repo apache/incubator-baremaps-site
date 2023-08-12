@@ -1,0 +1,45 @@
+.ctrl-container {
+  left: 665px;
+  color: black;
+}
+
+/* Responsive width for small screens */
+@media screen and (max-width: 768px) {
+  .ctrl-container {
+    left: 72%;
+  }
+}
+
+.icon {
+  padding: 0 10px;
+}
+
+.select-container {
+  width: 100%;
+  height: 29px;
+  display: flex;
+  align-items: center;
+}
+
+.style-select {
+  appearance: none;
+  border: none;
+  background-color: white;
+  outline: none;
+  box-shadow: none;
+  padding-right: 20px;
+
+  background-image: linear-gradient(45deg, transparent 50%, gray 50%),
+    linear-gradient(135deg, gray 50%, transparent 50%);
+  background-position: calc(100% - 5px) calc(50% + 2px), 100% calc(50% + 2px);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+
+.theme-select:focus {
+  background-image: linear-gradient(135deg, transparent 50%, gray 50%),
+    linear-gradient(45deg, gray 50%, transparent 50%);
+  background-position: calc(100% - 5px) 50%, 100% 50%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}

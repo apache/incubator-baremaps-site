@@ -8,6 +8,7 @@ import styles from './style.module.css';
 import { GeocoderSearch } from '../GeocoderSearch';
 import { STYLES } from './mapStyles';
 import { MapStyleSelect } from '../MapStyleSelect';
+import { MapLanguageSelect } from '../MapLanguageSelect';
 
 interface MapProps {
   longitude?: number;
@@ -65,6 +66,7 @@ export default function Map({
   geocoder = true,
   ipToLoc = true,
   styleSelect = false,
+  languageSelect = false,
   rounded = true,
   style = {}
 }: MapProps) {
@@ -125,6 +127,7 @@ export default function Map({
         />
       )}
       {styleSelect && <MapStyleSelect map={map} mapStyles={STYLES} />}
+      {languageSelect && <MapLanguageSelect map={map} />}
       <div ref={mapContainer} className={styles.map} />
     </div>
   );
