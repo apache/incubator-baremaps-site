@@ -21,6 +21,7 @@ interface MapProps {
    * Note: This precedes 'mapStyle' if both are defined
    */
   getMapStyle?: () => Promise<string | maplibregl.StyleSpecification>;
+  mapLanguage?: string;
   mapOptions?: Partial<maplibregl.MapOptions>;
   /**
    * 'getControls' a function because some controls access the window object
@@ -30,6 +31,7 @@ interface MapProps {
   geocoder?: boolean;
   ipToLoc?: boolean;
   styleSelect?: boolean;
+  languageSelect?: boolean;
   /** Map CSS styles */
   rounded?: boolean;
   style?: React.CSSProperties;
