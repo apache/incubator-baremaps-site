@@ -9,8 +9,8 @@
   },
   "map": {
     "type": "page",
-    "title": "Map",
-    "display": "hidden",
+    "title": "Demo",
+    "href": "/map",
     "theme": {
       "layout": "raw",
       "footer": false
