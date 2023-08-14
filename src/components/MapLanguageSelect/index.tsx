@@ -12,16 +12,19 @@ export const MapLanguageSelect: React.FC<MapLanguageSelectProps> = ({
 }) => {
   let languages = [
     { name: 'Default', code: 'name' },
+    { name: 'Arabic', code: 'name:ar' },
+    { name: 'Bengali', code: 'name:bn' },
+    { name: 'Chinese', code: 'name:zh' },
     { name: 'English', code: 'name:en' },
-    { name: 'Spanish', code: 'name:es' },
     { name: 'French', code: 'name:fr' },
     { name: 'German', code: 'name:de' },
+    { name: 'Hindi', code: 'name:hi' },
     { name: 'Italian', code: 'name:it' },
     { name: 'Japanese', code: 'name:ja' },
     { name: 'Korean', code: 'name:ko' },
     { name: 'Portuguese', code: 'name:pt' },
     { name: 'Russian', code: 'name:ru' },
-    { name: 'Chinese', code: 'name:zh' }
+    { name: 'Spanish', code: 'name:es' }
   ];
 
   return (
