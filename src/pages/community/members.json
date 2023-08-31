@@ -71,4 +71,11 @@
     "githubUsername": "percivall",
     "role": "Mentor"
   }
+  ,
+  {
+    "name": "Perdjesk",
+    "apacheUsername": "perdjesk",
+    "githubUsername": "perdjesk",
+    "role": "Committer"
+  }
 ]
