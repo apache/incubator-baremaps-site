@@ -20,13 +20,35 @@ following command:
 sudo apt-get install gdal-bin
 ```
 
+## Downloading the DEM Data
+
+The first step is to download the DEM data. For this tutorial, we will be
+using the [ASTER](https://asterweb.jpl.nasa.gov/gdem.asp) dataset.
+
+You can download it from the
+[NASA Earthdata](https://search.earthdata.nasa.gov/search/granules?p=C1711961296-LPCLOUD&pg[0][v]=f&pg[0][gsk]=-start_date&q=aster%20v3&tl=1691157297.898!3!!)
+website. You can either select the "granules" or click on the `Download All`
+button to download the entire dataset.
+
+> Note: You will need to create a free account on NASA Earthdata to download the data.
+
+![Earthdata ASTER DEM](/images/earthdata-aster-dem.png)
+
+**Alternative Datasets**
+
+If you want to use a different DEM dataset, below is a list of some other
+options:
+
+- [SRTM](https://www2.jpl.nasa.gov/srtm/)
+- [COPERNICUS-DEM](https://registry.opendata.aws/copernicus-dem/) (note:
+  contains quite some artifacts)
+
 ## Reprojecting the GeoTiff
 
-We will be using the [ASTER](https://asterweb.jpl.nasa.gov/gdem.asp) dataset
-for this example. The geotiff file provided in this tutorial is already in
-the desired projection (WebMercator), but in case you want to use a different
-geotiff file, you can use the gdalwarp command to reproject it. Here's an
-example of how to do it:
+The geotiff file provided in this tutorial is already in the desired
+projection (WebMercator), but in case you want to use a different geotiff
+file, you can use the gdalwarp command to reproject it. Here's an example of
+how to do it:
 
 ```
 gdalwarp -rc \
