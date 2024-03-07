@@ -48,6 +48,47 @@
       }
     }
   },
+  "apache": {
+    "title": "Apache",
+    "type": "menu",
+    "items": {
+      "events": {
+        "title": "Events",
+        "href": "https://eu.communityovercode.org/",
+        "newWindow": true
+      },
+      "license": {
+        "title": "License",
+        "href": "https://www.apache.org/licenses/",
+        "newWindow": true
+      },
+      "donate": {
+        "title": "Donate",
+        "href": "https://www.apache.org/foundation/sponsorship.html",
+        "newWindow": true
+      },
+      "thanks": {
+        "title": "Thanks",
+        "href": "https://www.apache.org/foundation/sponsors",
+        "newWindow": true
+      },
+      "security": {
+        "title": "Security",
+        "href": "https://www.apache.org/security/",
+        "newWindow": true
+      },
+      "privacy": {
+        "title": "Privacy",
+        "href": "https://privacy.apache.org/policies/privacy-policy-public.html",
+        "newWindow": true
+      },
+      "foundation": {
+        "title": "Apache Software Foundation",
+        "href": "https://www.apache.org/",
+        "newWindow": true
+      }
+    }
+  },
   "experiments": {
     "title": "Experiments",
     "type": "page",
