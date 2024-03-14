@@ -3,6 +3,7 @@ import { DocsThemeConfig } from 'nextra-theme-docs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMap } from '@fortawesome/free-regular-svg-icons';
 
+// @ts-ignore
 const config: DocsThemeConfig = {
   logo: (
     <>
@@ -50,6 +51,17 @@ const config: DocsThemeConfig = {
             Apache License, Version 2.0
           </a>
           .
+          <br />
+          Apache®, the names of Apache projects, and the feather logo are either{' '}
+          <a
+            href="https://www.apache.org/foundation/marks/list/"
+            target="_blank"
+            style={{ textDecoration: 'underline' }}
+          >
+            registered trademarks or trademarks
+          </a>{' '}
+          of the Apache Software Foundation in the United States and/or other
+          countries. .
         </span>
       </div>
     )
