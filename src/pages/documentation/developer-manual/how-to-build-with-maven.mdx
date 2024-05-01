@@ -57,3 +57,13 @@ If you want to work on [Geocoding](/documentation/examples/geocoding/) or
 ### Windows
 
 If you are using Windows, you will need to use `mvnw.cmd` instead of `./mvnw` and use set instead of export to set the environment variable.
+
+### Important
+
+If your build is taking a long time, it might be due to the presence of large data/map files. To identify then delete them run:
+
+```bash
+git clean -dnx
+cd examples/
+git clean -dfx
+```
