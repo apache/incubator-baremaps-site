@@ -5,8 +5,23 @@ title: Set up in IntelliJ IDEA
 
 # Set up in IntelliJ IDEA
 
-To open the project with IntelliJ, go under file -> open -> ...
+To open the project with IntelliJ, go under `file -> open -> ...` and select the `pom.xml` file in the root of the project.
 
-There are a few pre-created configurations to run the code quickly.
+We added a few configurations to run the code quickly. You can find them in the `Run/Debug Configurations` dropdown in the top right corner of the IDE.
 
-TODO
+These run configurations are either prefixed with an example name (e.g. `openstreetmap-`) corresponding to a directory in the `examples` folder or with `basemap-` and `daylight-` for the `basemap` and `daylight` folders.
+The suffix usually indicate the command used to run the configuration.
+
+For instance, to jump into the development of the `basemap`, you start a postgis container, run the `basemap-workflow` configuration to prepare the database, and run the `basemap-dev` configuration to serve the basemap.
+The `baremaps-dev` configuration will watch for changes in the style and the tileset and automatically reload the browser when changes are detected.
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/GkwG6EbVjvU?si=mb7hvtD1DrALfCqt"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allowfullscreen
+></iframe>
