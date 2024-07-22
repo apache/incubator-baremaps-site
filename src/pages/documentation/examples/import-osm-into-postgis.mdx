@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Import OSM data into PostGIS
+title: Import OpenStreetMap data into PostGIS
 ---
 
-# Import OSM data into PostGIS
+# Import OpenStreetMap data into PostGIS
 
 In this tutorial, we'll learn how to use Baremaps to import contour lines data in a PostGIS database.
 
@@ -13,16 +13,16 @@ Also, if you are in a hurry, consider skipping the "Under the Hood" sections.
 
 ## Dataset
 
-OpenStreetMap (OSM) is a free and editable map of the world.
+OpenStreetMap is a free and editable map of the world.
 It is maintained by a community of passionate volunteers in a way which is similar to Wikipedia.
 Every week, OpenStreetMap publishes a [full dump](https://planet.openstreetmap.org/) of its data in two flavours: a large XML file of about 90GB and a more compact binary file of about 50GB in the [Protocol Buffer Format](https://developers.google.com/protocol-buffers) (PBF).
-As processing such large files can take several hours, [Geofabrik](http://www.geofabrik.de/data/download.html) regularly publishes smaller extracts of OSM for specific regions.
-In this example we will use a tiny extract of OSM for [Liechtenstein](https://en.wikipedia.org/wiki/Liechtenstein), which is suitable for fast experiments.
+As processing such large files can take several hours, [Geofabrik](http://www.geofabrik.de/data/download.html) regularly publishes smaller extracts of OpenStreetMap for specific regions.
+In this example we will use a tiny extract of OpenStreetMap for [Liechtenstein](https://en.wikipedia.org/wiki/Liechtenstein), which is suitable for fast experiments.
 
 ## Importing OpenStreetMap Data
 
 A workflow is a directed acyclic graph of steps executed by Baremaps.
-To download and import the sample OSM data in Postgres, execute the following [workflow](https://raw.githubusercontent.com/apache/incubator-baremaps/main/examples/openstreetmap/workflow.json).
+To download and import the sample OpenStreetMap data in Postgres, execute the following [workflow](https://raw.githubusercontent.com/apache/incubator-baremaps/main/examples/openstreetmap/workflow.json).
 
 ```bash
 cd examples/openstreetmap
@@ -57,16 +57,16 @@ Eventually, the output produced by the command should look as follows.
 
 What can we learn from this output?
 First, we notice that Baremaps uses a connection pool to parallelize the import procedure.
-Then it imports the OSM data, populating the tables previously created.
+Then it imports the OpenStreetMap data, populating the tables previously created.
 In our case, the input is a file provided by Geofabrik.
 
-OSM's [conceptual model](https://wiki.openstreetmap.org/wiki/Elements) builds upon the notions of nodes, ways and relations.
+OpenStreetMap's [conceptual model](https://wiki.openstreetmap.org/wiki/Elements) builds upon the notions of nodes, ways and relations.
 In this normalized data model, a line (or way) is formed by a sequence of points (nodes) referenced by their id.
 In order to save denormalized geometries in PostGIS (e.g. linestring, polygon, multi-polygon, etc.), Baremaps creates a cache for nodes, ways and relations.
 [LMDB](https://symas.com/lmdb/) is used under the hood to achieve great performance.
 
 After the creation of the cache, Baremaps can populate the database with geometries.
-The geometries are stored in three tables named after the OSM conceptual model: `osm_nodes`, `osm_ways`, and `osm_relations`.
+The geometries are stored in three tables named after the OpenStreetMap conceptual model: `osm_nodes`, `osm_ways`, and `osm_relations`.
 In order to improve performances at query time, Baremaps also creates indexes for the tags and the geometries.
 The following Figure displays the schema of the PostGIS database created by Baremaps.
 
@@ -76,5 +76,5 @@ The following Figure displays the schema of the PostGIS database created by Bare
 
 In this tutorial, we learnt how to import OpenStreetMap data in PostGIS.
 
-Now that you have inserted the OSM data into the PostGIS database, you can use follow the [Serve Vector Tiles from PostGIS](/documentation/examples/serve-and-export-vector-tiles/) example to serve
+Now that you have inserted the OpenStreetMap data into the PostGIS database, you can use follow the [Serve Vector Tiles from PostGIS](/documentation/examples/serve-and-export-vector-tiles/) example to serve
 your PostGIS data directly as Vector Tiles in a web application with live reload capabilities.
