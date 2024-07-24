@@ -5,7 +5,7 @@ title: IP to location
 
 # IP to location
 
-Using data publicly available from the 5 [Regional Internet Registries (RIRs)](https://whatismyipaddress.com/rir)
+Using data publicly available from the 5 Regional Internet Registries (RIRs)
 we are able to generate a stream of objects detailing Internet resource allocations. We call these NIC Objects
 (Network Information Centre Objects).
 
@@ -17,7 +17,7 @@ Here is the list of the 5 RIRs.
 - [RIPE NCC](https://www.ripe.net/)
 - [APNIC](https://www.apnic.net/)
 
-Using the list of NIC objects, we extract those that concern IPv4 address ranges ([INETNUM](https://www.ripe.net/manage-ips-and-asns/db/support/documentation/ripe-database-documentation/rpsl-object-types/4-2-descriptions-of-primary-objects/4-2-4-description-of-the-inetnum-object))
+Using the list of NIC objects, we extract those that concern IPv4 address ranges (INETNUM)
 , then using the Baremaps Geocoder API, we iterate through the extracted NIC objects to geo-locate each one of them.
 
 The resulting geo-localised IPv4 address ranges are stored in a SQLite database which can be easily queried to geo-locate a specific IP.
@@ -27,14 +27,13 @@ We try to use these 4 attributes to query the Geocoder service :
 
 - _address_ contains the address of the NIC Object
 - _descr_ sometimes contains the address of the NIC Object
-- _country_ contains the country code in ISO format (ISO 3166) - [RIPE list of country codes](https://www.ripe.net/participate/member-support/list-of-members/list-of-country-codes-and-rirs)
+- _country_ contains the country code in ISO format (ISO 3166)
 - _geoloc_ contains the latitude and longitude which can be used directly
 
 Some NIC Objects contain a reference to an organisation, and the organisation's NIC Object itself contains the
 geo-localisation information. However, we don't make use of that for now.
 
-The [structure of the RIPE database](https://www.ripe.net/manage-ips-and-asns/db/support/documentation/ripe-database-documentation/ripe-database-structure)
-should be applicable to all the RIRs.
+The structure of the RIPE database should be applicable to all the RIRs.
 
 ## Generating the IP to location database
 
@@ -107,5 +106,6 @@ tag _iploc_ if you want to contribute.
 
 ## References
 
+- [https://apps.db.ripe.net/docs/](https://apps.db.ripe.net/docs/)
 - [https://www.iana.org/numbers](https://www.iana.org/numbers)
 - [https://www.irr.net/docs/list.html](https://www.irr.net/docs/list.html)

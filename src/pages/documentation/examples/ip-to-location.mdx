@@ -11,7 +11,7 @@ In this tutorial, we demonstrate how to create an IP to location index and then 
 
 The data used to create an IP to location index is publicly available from the [Internet routing registries (IRRs)](https://www.irr.net/docs/list.html) which includes the [Regional Internet Registries (RIRs)](https://en.wikipedia.org/wiki/Regional_Internet_registry)
 
-The data are formatted following [RPSL](https://www.irr.net/docs/rpsl.html) specifications and contain records that link IP address ranges to organisations along with some metadata.
+The data are formatted following [RPSL](https://irr.net/rpsl-guide/) specifications and contain records that link IP address ranges to organisations along with some metadata.
 
 ## Generate the index
 
@@ -32,7 +32,7 @@ The workflow executed in the above command does the following:
 baremaps iploc serve --database iploc.db --port 9000
 ```
 
-A simple web application serves the Geonames index. Go to [http://localhost:9000/](http://localhost:9000/) to see it in action.
+A simple web application serves the Geonames index. Go to your browser (`http://localhost:9000/`) to see it in action.
 
 ![ip-to-location](https://user-images.githubusercontent.com/238747/234003934-e10040e1-0fdc-45e9-95f5-322fb2401c97.png)
 
