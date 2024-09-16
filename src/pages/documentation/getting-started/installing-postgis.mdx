@@ -22,6 +22,18 @@ docker run \
   -d postgis/postgis:latest
 ```
 
+On a mac, you may prefer an image optimized for arm64:
+
+```
+docker run \
+  --name baremaps \
+  --publish 5432:5432 \
+  -e POSTGRES_DB=baremaps \
+  -e POSTGRES_USER=baremaps \
+  -e POSTGRES_PASSWORD=baremaps \
+  -d kartoza/postgis:16-3.4
+```
+
 You can then stop and start the container with the following commands:
 
 ```
