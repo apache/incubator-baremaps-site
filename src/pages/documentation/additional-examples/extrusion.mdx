@@ -5,7 +5,7 @@ title: Extrusion of vector tiles from OSM data
 
 # Extrusion of vector tiles from OSM data
 
-This example builds upon the [OpenStreetMap example](/documentation/examples/import-osm-into-postgis/) and shows how 3d
+This example builds upon the [OpenStreetMap example](/documentation/additional-examples/import-osm-into-postgis/) and shows how 3d
 buildings can be extruded with Maplibre. First, start by downloading the OSM data for London in the current directory.
 
 To import London data in the database.
@@ -15,7 +15,7 @@ cd examples/extrusion
 baremaps workflow execute --file workflow.json
 ```
 
-In the [tileset.json](https://raw.githubusercontent.com/apache/incubator-baremaps/main/examples/extrusion/tileset.json)
+In the [tileset.json](https://raw.githubusercontent.com/apache/incubator-baremaps/main/additional-examples/extrusion/tileset.json)
 file, notice the SQL query associated with the building layer. Here, the number of levels stored in OSM is multiplied by
 3, which roughly corresponds to the height of a level in meters.
 
@@ -31,7 +31,7 @@ WHERE tags ? 'building'
 ```
 
 This property is then used in
-the [style.json](https://raw.githubusercontent.com/apache/incubator-baremaps/main/examples/extrusion/style.json) file to
+the [style.json](https://raw.githubusercontent.com/apache/incubator-baremaps/main/additional-examples/extrusion/style.json) file to
 extrude the buildings.
 
 ```json

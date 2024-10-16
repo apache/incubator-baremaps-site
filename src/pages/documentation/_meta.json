@@ -1,7 +1,6 @@
 {
   "index": "Introduction",
-  "basemap": "Basemap",
   "getting-started": "Getting started",
-  "examples": "Examples",
+  "additional-examples": "Additional examples",
   "developer-manual": "Developer manual"
 }

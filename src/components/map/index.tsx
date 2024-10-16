@@ -65,7 +65,7 @@ export default function Map({
   getMapStyle,
   mapOptions = {} as maplibregl.MapOptions,
   getControls = getDefaultControls,
-  geocoder = true,
+  geocoder = false,
   ipToLoc = true,
   styleSelect = false,
   languageSelect = false,

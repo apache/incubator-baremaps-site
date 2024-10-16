@@ -1,0 +1,126 @@
+---
+layout: default
+title: Getting Started
+---
+
+# Getting Started
+
+Apache Baremaps comes with a [default schema and style](https://github.com/apache/incubator-baremaps/tree/main/basemap) similar to [OpenStreetMap Carto](https://github.com/gravitystorm/openstreetmap-carto). This serves as a great starting point to get familiar with the project and build your own basemap.
+
+We chose the [Apache License](https://github.com/apache/incubator-baremaps/blob/main/LICENSE) so that map vendors can create derivative works without attributing the Apache Baremaps project on the map. The only requirement is to give proper credit to the contributors behind the data sources, such as [OpenStreetMap](https://www.openstreetmap.org/) and [Natural Earth](https://www.naturalearthdata.com/). Please note that this schema and style are now used by default to display vector maps on the [OpenStreetMap wiki](https://wiki.openstreetmap.org/wiki/Template:Vector_map).
+
+While the quality of the schema and style continues to improve, contributions, enhancements, and feedback are highly encouraged.
+
+import Map from '@/components/map';
+
+<div style={{ marginTop: 20, height: 450 }}>
+  <Map />
+</div>
+
+## Installing PostGIS
+
+This step is not required if you only plan to execute the Geocoding or IP-to-location examples.
+
+To insert and generate vector tiles, you need to set up a [PostGIS](https://postgis.net/) database, which will host all the data required to generate the vector tiles.
+
+The following Docker command will help you quickly set up the PostGIS database:
+
+```bash
+docker run \
+  --name baremaps \
+  --publish 5432:5432 \
+  -e POSTGRES_DB=baremaps \
+  -e POSTGRES_USER=baremaps \
+  -e POSTGRES_PASSWORD=baremaps \
+  -d postgis/postgis:latest
+```
+
+For macOS users with an arm64 architecture, you may prefer the following optimized image:
+
+```
+docker run \
+  --name baremaps \
+  --publish 5432:5432 \
+  -e POSTGRES_DB=baremaps \
+  -e POSTGRES_USER=baremaps \
+  -e POSTGRES_PASSWORD=baremaps \
+  -d kartoza/postgis:16-3.4
+```
+
+You can stop and start the container using the following commands:
+
+```
+docker stop baremaps
+docker start baremaps
+```
+
+## Installing the CLI
+
+To run Apache Baremaps, you must first install Java 17 or a later version. [SDKMAN](https://sdkman.io/) offers a convenient Command Line Interface (CLI) to install and manage Java versions.
+
+Next, download and decompress the latest binary [binary distribution](https://dist.apache.org/repos/dist/release/incubator/baremaps/) of Apache Baremaps, or [build](https://baremaps.apache.org/documentation/developer-manual/how-to-build-with-maven/) the project from source.
+Afterward, add the `bin` directory of the decompressed distribution to your `PATH` environment variable:
+
+```
+tar -xzf baremaps-<version>-incubating-bin.tar.gz
+export PATH=$PATH:`pwd`/baremaps/bin
+```
+
+Running the `baremaps` command should now produce an output like this:
+
+```
+Usage: baremaps [-V] [COMMAND]
+A toolkit for producing vector tiles.
+  -V, --version   Print version info.
+Commands:
+  workflow  Manage a workflow.
+  database  Database commands.
+  map       Map commands.
+  geocoder  Geocoder commands (experimental).
+  iploc     IP to location commands (experimental).
+  ogcapi    OGC API server (experimental).
+```
+
+## Preparing the Database
+
+To build the basemap locally, navigate to the `basemap` directory at the root of the project and execute the following command:
+
+```bash
+baremaps workflow execute --file=import.js
+```
+
+If you're using Docker, ensure that at least 20GB of storage is allocated to Docker. Depending on your machine and internet connection, this process may take up to 30 minutes.
+
+## Developing vector tiles
+
+To start the server in development mode, run the following command:
+
+```bash
+baremaps map dev --tileset tileset.js --style style.js
+```
+
+In this mode, any changes to the style or tileset will be automatically detected, and the web page will refresh accordingly.
+
+## Serving vector tiles
+
+To serve the basemap in production mode, run the following command:
+
+```bash
+baremaps map serve --tileset tileset.js --style style.js
+```
+
+In production mode, the server does not watch for changes in the style or tileset. You can also pass additional parameters to customize the server's behavior. For example:
+
+- The `--cache` parameter specifies a Caffeine specification for the cache. For instance, `'maximumWeight=1073741824,expireAfterAccess=1h'` limits the cache to 1GB and expires entries after 1 hour.
+- The `--assets` parameter specifies the directory where static assets like fonts, images, or icons are stored.
+- And more.
+
+## Pregenerating vector tiles
+
+To avoid generating vector tiles on the fly, you can pregenerate them. Apache Baremaps supports several formats, including filesystem exports, MBTiles, and PMTiles. To pregenerate the tiles, run the following command:
+
+```bash
+baremaps map export --tileset tileset.js --repository tiles.pmtiles --format pmtiles
+```
+
+Note that this command uses the bounds and zoom levels defined in the tileset to generate the tiles.
