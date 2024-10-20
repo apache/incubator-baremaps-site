@@ -17,6 +17,8 @@
 github:
   description: Apache Baremaps is a toolkit and a set of infrastructure components for creating, publishing, and operating online maps.
   homepage: https://baremaps.apache.org
+  features:
+    issues: true
   labels:
     - java
     - vector-tiles
