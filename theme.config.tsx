@@ -17,7 +17,8 @@ const config: DocsThemeConfig = {
     link: 'https://github.com/apache/incubator-baremaps/'
   },
   feedback: {
-    useLink: () => 'https://github.com/apache/incubator-baremaps/issues/new'
+    useLink: () =>
+      'https://github.com/apache/incubator-baremaps-site/issues/new'
   },
   docsRepositoryBase:
     'https://github.com/apache/incubator-baremaps-site/blob/main/',
