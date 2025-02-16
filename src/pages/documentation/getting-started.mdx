@@ -83,10 +83,19 @@ Commands:
 
 ## Preparing the Database
 
-To build the basemap locally, navigate to the `basemap` directory at the root of the project and execute the following command:
+To build the basemap locally, navigate to the `basemap` directory at the root of the project and execute the following command to create de database schema:
+
+```bash
+baremaps workflow execute --file=create.js
+```
+Import the data into the database with the following command:
 
 ```bash
 baremaps workflow execute --file=import.js
+```
+Refresh the materialized views with the following command:
+```bash
+baremaps workflow execute --file=refresh.js
 ```
 
 If you're using Docker, ensure that at least 20GB of storage is allocated to Docker. Depending on your machine and internet connection, this process may take up to 30 minutes.
