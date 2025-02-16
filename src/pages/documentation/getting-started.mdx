@@ -88,12 +88,15 @@ To build the basemap locally, navigate to the `basemap` directory at the root of
 ```bash
 baremaps workflow execute --file=create.js
 ```
+
 Import the data into the database with the following command:
 
 ```bash
 baremaps workflow execute --file=import.js
 ```
+
 Refresh the materialized views with the following command:
+
 ```bash
 baremaps workflow execute --file=refresh.js
 ```
