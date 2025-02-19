@@ -10,11 +10,8 @@
   "map": {
     "type": "page",
     "title": "Demo",
-    "href": "/map",
-    "theme": {
-      "layout": "raw",
-      "footer": false
-    }
+    "href": "https://demo.baremaps.com/",
+    "newWindow": true
   },
   "download": {
     "title": "Download",
