@@ -42,6 +42,11 @@
         "title": "Contribute to Baremaps",
         "href": "https://github.com/apache/incubator-baremaps/blob/main/CONTRIBUTING.md",
         "newWindow": true
+      },
+      "security": {
+        "title": "Security Guidelines",
+        "href": "https://github.com/apache/incubator-baremaps/blob/main/SECURITY.md",
+        "newWindow": true
       }
     }
   },
