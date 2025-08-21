@@ -34,8 +34,6 @@ notifications:
   issues: commits@baremaps.apache.org
   pullrequests: commits@baremaps.apache.org
 
-jekyll: ~
-
 staging:
   whoami: asf-site
 
